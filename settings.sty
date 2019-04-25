@@ -1,0 +1,520 @@
+﻿% settings.sty by SteveCheung 2019/03/29
+% Copyright (C) 2019 by SteveCheung, All rights reserved.
+%
+%  縦書補充設定
+%
+%  作成者: 子康    dongfang0571@gmail.com
+%
+%用作upLaTeX2e入門到勸退.tex
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\ProvidesPackage{settings}[2019/03/29 v1.0a SteveCheung]
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%自定義的字號
+\newcommand{\bthuge}{\fontsize{60}{72} \selectfont }
+\newcommand{\btlarge}{\fontsize{48}{60}\selectfont }
+\newcommand{\tlarge}{\fontsize{36}{48}\selectfont }
+\newcommand{\ularge}{\fontsize{30}{48}\selectfont }
+
+%%顔色設定
+\usepackage{color}
+\usepackage{xcolor}
+\newcommand{\black}[1]{\textcolor{black}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\紅}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\magenta}[1]{\textcolor{magenta}{#1}}
+\newcommand{\pink}[1]{\textcolor{pink}{#1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\lime}[1]{\textcolor{lime}{#1}}
+\newcommand{\violet}[1]{\textcolor{violet}{#1}}
+\newcommand{\olive}[1]{\textcolor{olive}{#1}}
+\newcommand{\lightgray}[1]{\textcolor{lightgray}{#1}}
+\newcommand{\teal}[1]{\textcolor{teal}{#1}}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+
+%設置代碼環境
+\usepackage{listings}
+\lstset{
+  backgroundcolor=\color{white},  				 % choose the background color
+  basicstyle=\fontsize{8pt}{10}%
+  		\selectfont\ttfamily, 							% size of fonts used for the code或改成\small\monaco稍大
+  numbers=left,                  	 		     % 设置行号
+  firstnumber=last,
+  numberstyle=\tiny\ttfamily,     		     % 设置行号字体大小
+  columns=fullflexible,
+  breaklines=true,           				      % automatic line breaking only at whitespace
+  captionpos=b,             			  	     % sets the caption-position to bottom
+  tabsize=4,
+  commentstyle=\color{black},   					 % 设置注释颜色
+  escapeinside={(*}{*)},        				  % if you want to add LaTeX within your code
+  keywordstyle=\color{black},     			  % 设置keyword颜色
+  stringstyle=\color{black}\ttfamily,     % string literal style
+  frame=single,                     		   % 设置有边框
+  rulesepcolor=\color{red!20!green!20!blue!20},
+ % identifierstyle=\color{red},
+  language=TeX,
+	classoffset=0,
+		morekeywords={DeclareFontFamily,DeclareFontShape,DeclareRobustCommand,%
+			special},keywordstyle=\color{red},
+	classoffset=1,
+		morekeywords={mapline,},keywordstyle=\color{blue},
+	classoffset=0						% restore default
+}
+
+
+%% 図表など
+% 図の読みこみのために
+\usepackage[dvipdfmx]{graphicx}
+\DeclareGraphicsExtensions{.eps,.jpg,.png,.pdf}
+\usepackage{float}   %使用浮動體
+\usepackage{booktabs} % 表の横罫線
+
+%%%% PDF 作者信息及超鏈接設定
+\usepackage[dvipdfmx,
+%    pdfdirection=R2L, % 開く方向%從右往左翻頁
+    colorlinks=true,   %設置超鏈接的顔色
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=cyan,
+    citecolor=black,
+    bookmarks=true, % PDFにしおりをつける
+    bookmarksnumbered=true, % しおりに節番号などをつける
+    bookmarksopen=true, %展開所有層級
+  ]{hyperref}
+\hypersetup{ %
+    pdftitle= {upLaTeX2e入門到勸退} , % PDFのタイトル
+    pdfauthor= {子　康} , % PDFの作成者
+    pdfkeywords = {upTeX,upLaTeX,Unicode,CJK},  %関鍵詞
+    pdfsubject = {Chinese Novel },    % 主題
+    pdfcreator  = {up\LaTeX\ with package  hyperref },    %工具
+    pdfproducer = {dvipdfmx(20180506)},   %製作軟件
+}
+
+% PDFにしたときのしおりの文字化けを防ぐ  % 使書箋支持Unicode-CJK 内碼
+\usepackage{pxjahyper}
+
+
+
+\usepackage[paperwidth=210mm,paperheight=297mm,top=56pt,right=56pt,bottom=56pt,left=72pt]{geometry}
+
+% 頁面修正
+%\setlength{\hoffset}{-5 mm}
+%\setlength{\voffset}{-10 mm}
+%\setlength{\textwidth}{120mm}
+%\setlength{\textheight}{240mm}
+%\setlength{\marginparwidth}{20 mm}
+%\setlength{\marginparsep}{1 zw}
+\setlength{\parindent}{2zw}             %中文縱書：退格2個全角字，好像沒什麽卵用
+
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+   {.25\Cvs \@plus.25\Cvs \@minus.2\Cvs}%
+   {.25\Cvs \@plus.23\Cvs}%
+   {\normalfont\Large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+   {.25\Cvs \@plus.25\Cvs \@minus.2\Cvs}%
+   {.25\Cvs \@plus.23\Cvs}%
+   {\normalfont\large\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+   {.25\Cvs \@plus.25\Cvs \@minus.2\Cvs}%
+   {.25\Cvs \@plus.23\Cvs}%
+   {\normalfont\normalsize\bfseries}}
+%目錄數字設置
+\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\@Kanji{#3}}}
+\makeatother
+
+
+\usepackage[uplatex,deluxe]{otf}               % 多書體支持，在SZ.CLS中定義
+\usepackage{plext}% 縦組用
+%\usepackage{lmodern}														% http://ctan.org/pkg/lm
+\usepackage{unicode-math}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{metalogo}  %logo包
+
+\usepackage{pxfonts}
+\usepackage{uline--}
+
+
+%%%%%%%%%%%%%%%%  簡體中文 adobe 仿宋體 & adobe 楷體  %%%%%%%%%%%%%%%%%%%%%%%
+
+%  宋體&黑體
+\DeclareFontFamily{JY2}{utmr}{}
+\DeclareFontFamily{JT2}{utmr}{}
+
+\DeclareFontShape{JY2}{utmr}{m}{n}{<->s*[0.924690]otf-utmr-h}{}
+\DeclareFontShape{JY2}{utmr}{m}{it}{<->ssub*utmr/m/n}{}
+\DeclareFontShape{JY2}{utmr}{m}{sl}{<->ssub*utmr/m/n}{}
+\DeclareFontShape{JY2}{utmr}{m}{sc}{<->ssub*utmr/m/n}{}
+
+\DeclareFontShape{JT2}{utmr}{m}{n}{<->s*[0.924690]otf-utmr-v}{}
+\DeclareFontShape{JT2}{utmr}{m}{it}{<->ssub*utmr/m/n}{}
+\DeclareFontShape{JT2}{utmr}{m}{sl}{<->ssub*utmr/m/n}{}
+\DeclareFontShape{JT2}{utmr}{m}{sc}{<->ssub*utmr/m/n}{}
+
+\DeclareRobustCommand\utmin{\kanjifamily{utmr}\selectfont}
+
+\DeclareFontFamily{JY2}{utgr}{}
+\DeclareFontFamily{JT2}{utgr}{}
+
+\DeclareFontShape{JY2}{utgr}{m}{n}{<->s*[0.924690]otf-utgr-h}{}
+\DeclareFontShape{JT2}{utgr}{m}{it}{<->ssub*utgr/m/n}{}
+\DeclareFontShape{JT2}{utgr}{m}{sl}{<->ssub*utgr/m/n}{}
+\DeclareFontShape{JT2}{utgr}{m}{sc}{<->ssub*utgr/m/n}{}
+
+\DeclareFontShape{JT2}{utgr}{m}{n}{<->s*[0.924690]otf-utgr-v}{}
+\DeclareFontShape{JT2}{utgr}{m}{it}{<->ssub*utgr/m/n}{}
+\DeclareFontShape{JT2}{utgr}{m}{sl}{<->ssub*utgr/m/n}{}
+\DeclareFontShape{JT2}{utgr}{m}{sc}{<->ssub*utgr/m/n}{}
+
+\DeclareRobustCommand\uthei{\kanjifamily{utgr}\selectfont}
+
+% 簡體中文 adobe 仿宋體 & adobe 楷體
+\DeclareFontFamily{JY2}{ucmr}{}
+\DeclareFontFamily{JT2}{ucmr}{}
+
+\DeclareFontShape{JY2}{ucmr}{m}{n}{<->s*[0.924690]otf-ucmr-h}{}
+\DeclareFontShape{JY2}{ucmr}{m}{it}{<->ssub*ucmr/m/n}{}
+\DeclareFontShape{JY2}{ucmr}{m}{sl}{<->ssub*ucmr/m/n}{}
+\DeclareFontShape{JY2}{ucmr}{m}{sc}{<->ssub*ucmr/m/n}{}
+
+\DeclareFontShape{JT2}{ucmr}{m}{n}{<->s*[0.924690]otf-ucmr-v}{}
+\DeclareFontShape{JT2}{ucmr}{m}{it}{<->ssub*ucmr/m/n}{}
+\DeclareFontShape{JT2}{ucmr}{m}{sl}{<->ssub*ucmr/m/n}{}
+\DeclareFontShape{JT2}{ucmr}{m}{sc}{<->ssub*ucmr/m/n}{}
+
+\DeclareRobustCommand\usong{\kanjifamily{ucmr}\selectfont}
+
+\DeclareFontFamily{JY2}{ucgr}{}
+\DeclareFontFamily{JT2}{ucgr}{}
+
+\DeclareFontShape{JY2}{ucgr}{m}{n}{<->s*[0.924690]otf-ucgr-h}{}
+\DeclareFontShape{JT2}{ucgr}{m}{it}{<->ssub*ucgr/m/n}{}
+\DeclareFontShape{JT2}{ucgr}{m}{sl}{<->ssub*ucgr/m/n}{}
+\DeclareFontShape{JT2}{ucgr}{m}{sc}{<->ssub*ucgr/m/n}{}
+
+\DeclareFontShape{JT2}{ucgr}{m}{n}{<->s*[0.924690]otf-ucgr-v}{}
+\DeclareFontShape{JT2}{ucgr}{m}{it}{<->ssub*ucgr/m/n}{}
+\DeclareFontShape{JT2}{ucgr}{m}{sl}{<->ssub*ucgr/m/n}{}
+\DeclareFontShape{JT2}{ucgr}{m}{sc}{<->ssub*ucgr/m/n}{}
+
+\DeclareRobustCommand\ukai{\kanjifamily{ucgr}\selectfont}
+
+% 簡體中文 adobe 細宋體 & adobe 黑體
+\DeclareFontFamily{JY2}{upstsl}{}
+\DeclareFontFamily{JT2}{upstsl}{}
+
+\DeclareFontShape{JY2}{upstsl}{m}{n}{<->s*[0.924690]upstsl-h}{}
+\DeclareFontShape{JY2}{upstsl}{m}{it}{<->ssub*upstsl/m/n}{}
+\DeclareFontShape{JY2}{upstsl}{m}{sl}{<->ssub*upstsl/m/n}{}
+\DeclareFontShape{JY2}{upstsl}{m}{sc}{<->ssub*upstsl/m/n}{}
+
+\DeclareFontShape{JT2}{upstsl}{m}{n}{<->s*[0.924690]upstsl-v}{}
+\DeclareFontShape{JT2}{upstsl}{m}{it}{<->ssub*upstsl/m/n}{}
+\DeclareFontShape{JT2}{upstsl}{m}{sl}{<->ssub*upstsl/m/n}{}
+\DeclareFontShape{JT2}{upstsl}{m}{sc}{<->ssub*upstsl/m/n}{}
+
+\DeclareRobustCommand\upstsl{\kanjifamily{upstsl}\selectfont}
+
+\DeclareFontFamily{JY2}{upstht}{}
+\DeclareFontFamily{JT2}{upstht}{}
+
+\DeclareFontShape{JY2}{upstht}{m}{n}{<->s*[0.924690]upstht-h}{}
+\DeclareFontShape{JT2}{upstht}{m}{it}{<->ssub*upstht/m/n}{}
+\DeclareFontShape{JT2}{upstht}{m}{sl}{<->ssub*upstht/m/n}{}
+\DeclareFontShape{JT2}{upstht}{m}{sc}{<->ssub*upstht/m/n}{}
+
+\DeclareFontShape{JT2}{upstht}{m}{n}{<->s*[0.924690]upstht-v}{}
+\DeclareFontShape{JT2}{upstht}{m}{it}{<->ssub*upstht/m/n}{}
+\DeclareFontShape{JT2}{upstht}{m}{sl}{<->ssub*upstht/m/n}{}
+\DeclareFontShape{JT2}{upstht}{m}{sc}{<->ssub*upstht/m/n}{}
+
+\DeclareRobustCommand\upstht{\kanjifamily{upstht}\selectfont}
+
+\newcommand\songti[1]{\utmin#1}
+\newcommand\heiti[1]{\uthei#1}
+\newcommand\kaiti[1]{\ukai#1}
+\newcommand\fsong[1]{\usong#1}
+
+%%%%%%%%%%%%%%%%  簡體中文 adobe 仿宋體 & adobe 楷體  %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  思源宋体韓國版OTF  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareFontFamily{JY2}{symk}{}
+\DeclareFontFamily{JT2}{symk}{}
+
+\DeclareFontShape{JY2}{symk}{j}{n}{<->s*[0.924690]symt-kr-j-jy2}{}
+\DeclareFontShape{JT2}{symk}{j}{it}{<->ssub*symk/j/n}{}
+\DeclareFontShape{JT2}{symk}{j}{sl}{<->ssub*symk/j/n}{}
+\DeclareFontShape{JT2}{symk}{j}{sc}{<->ssub*symk/j/n}{}
+
+\DeclareFontShape{JT2}{symk}{j}{n}{<->s*[0.924690]symt-kr-j-jt2}{}
+\DeclareFontShape{JT2}{symk}{j}{it}{<->ssub*symk/j/n}{}
+\DeclareFontShape{JT2}{symk}{j}{sl}{<->ssub*symk/j/n}{}
+\DeclareFontShape{JT2}{symk}{j}{sc}{<->ssub*symk/j/n}{}
+
+\DeclareFontShape{JY2}{symk}{l}{n}{<->s*[0.924690]symt-kr-l-jy2}{}
+\DeclareFontShape{JT2}{symk}{l}{it}{<->ssub*symk/l/n}{}
+\DeclareFontShape{JT2}{symk}{l}{sl}{<->ssub*symk/l/n}{}
+\DeclareFontShape{JT2}{symk}{l}{sc}{<->ssub*symk/l/n}{}
+
+\DeclareFontShape{JT2}{symk}{l}{n}{<->s*[0.924690]symt-kr-l-jt2}{}
+\DeclareFontShape{JT2}{symk}{l}{it}{<->ssub*symk/l/n}{}
+\DeclareFontShape{JT2}{symk}{l}{sl}{<->ssub*symk/l/n}{}
+\DeclareFontShape{JT2}{symk}{l}{sc}{<->ssub*symk/l/n}{}
+
+\DeclareFontShape{JY2}{symk}{r}{n}{<->s*[0.924690]symt-kr-r-jy2}{}
+\DeclareFontShape{JT2}{symk}{r}{it}{<->ssub*symk/r/n}{}
+\DeclareFontShape{JT2}{symk}{r}{sl}{<->ssub*symk/r/n}{}
+\DeclareFontShape{JT2}{symk}{r}{sc}{<->ssub*symk/r/n}{}
+
+\DeclareFontShape{JT2}{symk}{r}{n}{<->s*[0.924690]symt-kr-r-jt2}{}
+\DeclareFontShape{JT2}{symk}{r}{it}{<->ssub*symk/r/n}{}
+\DeclareFontShape{JT2}{symk}{r}{sl}{<->ssub*symk/r/n}{}
+\DeclareFontShape{JT2}{symk}{r}{sc}{<->ssub*symk/r/n}{}
+
+\DeclareFontShape{JY2}{symk}{m}{n}{<->s*[0.924690]symt-kr-m-jy2}{}
+\DeclareFontShape{JT2}{symk}{m}{it}{<->ssub*symk/m/n}{}
+\DeclareFontShape{JT2}{symk}{m}{sl}{<->ssub*symk/m/n}{}
+\DeclareFontShape{JT2}{symk}{m}{sc}{<->ssub*symk/m/n}{}
+
+\DeclareFontShape{JT2}{symk}{m}{n}{<->s*[0.924690]symt-kr-m-jt2}{}
+\DeclareFontShape{JT2}{symk}{m}{it}{<->ssub*symk/m/n}{}
+\DeclareFontShape{JT2}{symk}{m}{sl}{<->ssub*symk/m/n}{}
+\DeclareFontShape{JT2}{symk}{m}{sc}{<->ssub*symk/m/n}{}
+
+\DeclareFontShape{JY2}{symk}{d}{n}{<->s*[0.924690]symt-kr-d-jy2}{}
+\DeclareFontShape{JT2}{symk}{d}{it}{<->ssub*symk/d/n}{}
+\DeclareFontShape{JT2}{symk}{d}{sl}{<->ssub*symk/d/n}{}
+\DeclareFontShape{JT2}{symk}{d}{sc}{<->ssub*symk/d/n}{}
+
+\DeclareFontShape{JT2}{symk}{d}{n}{<->s*[0.924690]symt-kr-d-jt2}{}
+\DeclareFontShape{JT2}{symk}{d}{it}{<->ssub*symk/d/n}{}
+\DeclareFontShape{JT2}{symk}{d}{sl}{<->ssub*symk/d/n}{}
+\DeclareFontShape{JT2}{symk}{d}{sc}{<->ssub*symk/d/n}{}
+
+\DeclareFontShape{JY2}{symk}{b}{n}{<->s*[0.924690]symt-kr-b-jy2}{}
+\DeclareFontShape{JT2}{symk}{b}{it}{<->ssub*symk/b/n}{}
+\DeclareFontShape{JT2}{symk}{b}{sl}{<->ssub*symk/b/n}{}
+\DeclareFontShape{JT2}{symk}{b}{sc}{<->ssub*symk/b/n}{}
+
+\DeclareFontShape{JT2}{symk}{b}{n}{<->s*[0.924690]symt-kr-b-jt2}{}
+\DeclareFontShape{JT2}{symk}{b}{it}{<->ssub*symk/b/n}{}
+\DeclareFontShape{JT2}{symk}{b}{sl}{<->ssub*symk/b/n}{}
+\DeclareFontShape{JT2}{symk}{b}{sc}{<->ssub*symk/b/n}{}
+
+\DeclareFontShape{JY2}{symk}{h}{n}{<->s*[0.924690]symt-kr-h-jy2}{}
+\DeclareFontShape{JT2}{symk}{h}{it}{<->ssub*symk/h/n}{}
+\DeclareFontShape{JT2}{symk}{h}{sl}{<->ssub*symk/h/n}{}
+\DeclareFontShape{JT2}{symk}{h}{sc}{<->ssub*symk/h/n}{}
+
+\DeclareFontShape{JT2}{symk}{h}{n}{<->s*[0.924690]symt-kr-h-jt2}{}
+\DeclareFontShape{JT2}{symk}{h}{it}{<->ssub*symk/h/n}{}
+\DeclareFontShape{JT2}{symk}{h}{sl}{<->ssub*symk/h/n}{}
+\DeclareFontShape{JT2}{symk}{h}{sc}{<->ssub*symk/h/n}{}
+
+\DeclareRobustCommand\symkj{\kanjifamily{symk}\kanjiseries{j}\selectfont}
+\DeclareRobustCommand\symkl{\kanjifamily{symk}\kanjiseries{l}\selectfont}
+\DeclareRobustCommand\symkr{\kanjifamily{symk}\kanjiseries{r}\selectfont}
+\DeclareRobustCommand\symkm{\kanjifamily{symk}\kanjiseries{m}\selectfont}
+\DeclareRobustCommand\symkd{\kanjifamily{symk}\kanjiseries{d}\selectfont}
+\DeclareRobustCommand\symkb{\kanjifamily{symk}\kanjiseries{b}\selectfont}
+\DeclareRobustCommand\symkh{\kanjifamily{symk}\kanjiseries{h}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  思源宋体韓國版OTF  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  思源黑体韓國版OTF  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareFontFamily{JY2}{sygk}{}
+\DeclareFontFamily{JT2}{sygk}{}
+
+\DeclareFontShape{JY2}{sygk}{j}{n}{<->s*[0.924690]syht-kr-j-jy2}{}
+\DeclareFontShape{JT2}{sygk}{j}{it}{<->ssub*sygk/j/n}{}
+\DeclareFontShape{JT2}{sygk}{j}{sl}{<->ssub*sygk/j/n}{}
+\DeclareFontShape{JT2}{sygk}{j}{sc}{<->ssub*sygk/j/n}{}
+
+\DeclareFontShape{JT2}{sygk}{j}{n}{<->s*[0.924690]syht-kr-j-jt2}{}
+\DeclareFontShape{JT2}{sygk}{j}{it}{<->ssub*sygk/j/n}{}
+\DeclareFontShape{JT2}{sygk}{j}{sl}{<->ssub*sygk/j/n}{}
+\DeclareFontShape{JT2}{sygk}{j}{sc}{<->ssub*sygk/j/n}{}
+
+\DeclareFontShape{JY2}{sygk}{l}{n}{<->s*[0.924690]syht-kr-l-jy2}{}
+\DeclareFontShape{JT2}{sygk}{l}{it}{<->ssub*sygk/l/n}{}
+\DeclareFontShape{JT2}{sygk}{l}{sl}{<->ssub*sygk/l/n}{}
+\DeclareFontShape{JT2}{sygk}{l}{sc}{<->ssub*sygk/l/n}{}
+
+\DeclareFontShape{JT2}{sygk}{l}{n}{<->s*[0.924690]syht-kr-l-jt2}{}
+\DeclareFontShape{JT2}{sygk}{l}{it}{<->ssub*sygk/l/n}{}
+\DeclareFontShape{JT2}{sygk}{l}{sl}{<->ssub*sygk/l/n}{}
+\DeclareFontShape{JT2}{sygk}{l}{sc}{<->ssub*sygk/l/n}{}
+
+\DeclareFontShape{JY2}{sygk}{r}{n}{<->s*[0.924690]syht-kr-r-jy2}{}
+\DeclareFontShape{JT2}{sygk}{r}{it}{<->ssub*sygk/r/n}{}
+\DeclareFontShape{JT2}{sygk}{r}{sl}{<->ssub*sygk/r/n}{}
+\DeclareFontShape{JT2}{sygk}{r}{sc}{<->ssub*sygk/r/n}{}
+
+\DeclareFontShape{JT2}{sygk}{r}{n}{<->s*[0.924690]syht-kr-r-jt2}{}
+\DeclareFontShape{JT2}{sygk}{r}{it}{<->ssub*sygk/r/n}{}
+\DeclareFontShape{JT2}{sygk}{r}{sl}{<->ssub*sygk/r/n}{}
+\DeclareFontShape{JT2}{sygk}{r}{sc}{<->ssub*sygk/r/n}{}
+
+\DeclareFontShape{JY2}{sygk}{m}{n}{<->s*[0.924690]syht-kr-m-jy2}{}
+\DeclareFontShape{JT2}{sygk}{m}{it}{<->ssub*sygk/m/n}{}
+\DeclareFontShape{JT2}{sygk}{m}{sl}{<->ssub*sygk/m/n}{}
+\DeclareFontShape{JT2}{sygk}{m}{sc}{<->ssub*sygk/m/n}{}
+
+\DeclareFontShape{JT2}{sygk}{m}{n}{<->s*[0.924690]syht-kr-m-jt2}{}
+\DeclareFontShape{JT2}{sygk}{m}{it}{<->ssub*sygk/m/n}{}
+\DeclareFontShape{JT2}{sygk}{m}{sl}{<->ssub*sygk/m/n}{}
+\DeclareFontShape{JT2}{sygk}{m}{sc}{<->ssub*sygk/m/n}{}
+
+\DeclareFontShape{JY2}{sygk}{d}{n}{<->s*[0.924690]syht-kr-d-jy2}{}
+\DeclareFontShape{JT2}{sygk}{d}{it}{<->ssub*sygk/d/n}{}
+\DeclareFontShape{JT2}{sygk}{d}{sl}{<->ssub*sygk/d/n}{}
+\DeclareFontShape{JT2}{sygk}{d}{sc}{<->ssub*sygk/d/n}{}
+
+\DeclareFontShape{JT2}{sygk}{d}{n}{<->s*[0.924690]syht-kr-d-jt2}{}
+\DeclareFontShape{JT2}{sygk}{d}{it}{<->ssub*sygk/d/n}{}
+\DeclareFontShape{JT2}{sygk}{d}{sl}{<->ssub*sygk/d/n}{}
+\DeclareFontShape{JT2}{sygk}{d}{sc}{<->ssub*sygk/d/n}{}
+
+\DeclareFontShape{JY2}{sygk}{b}{n}{<->s*[0.924690]syht-kr-b-jy2}{}
+\DeclareFontShape{JT2}{sygk}{b}{it}{<->ssub*sygk/b/n}{}
+\DeclareFontShape{JT2}{sygk}{b}{sl}{<->ssub*sygk/b/n}{}
+\DeclareFontShape{JT2}{sygk}{b}{sc}{<->ssub*sygk/b/n}{}
+
+\DeclareFontShape{JT2}{sygk}{b}{n}{<->s*[0.924690]syht-kr-b-jt2}{}
+\DeclareFontShape{JT2}{sygk}{b}{it}{<->ssub*sygk/b/n}{}
+\DeclareFontShape{JT2}{sygk}{b}{sl}{<->ssub*sygk/b/n}{}
+\DeclareFontShape{JT2}{sygk}{b}{sc}{<->ssub*sygk/b/n}{}
+
+\DeclareFontShape{JY2}{sygk}{h}{n}{<->s*[0.924690]syht-kr-h-jy2}{}
+\DeclareFontShape{JT2}{sygk}{h}{it}{<->ssub*sygk/h/n}{}
+\DeclareFontShape{JT2}{sygk}{h}{sl}{<->ssub*sygk/h/n}{}
+\DeclareFontShape{JT2}{sygk}{h}{sc}{<->ssub*sygk/h/n}{}
+
+\DeclareFontShape{JT2}{sygk}{h}{n}{<->s*[0.924690]syht-kr-h-jt2}{}
+\DeclareFontShape{JT2}{sygk}{h}{it}{<->ssub*sygk/h/n}{}
+\DeclareFontShape{JT2}{sygk}{h}{sl}{<->ssub*sygk/h/n}{}
+\DeclareFontShape{JT2}{sygk}{h}{sc}{<->ssub*sygk/h/n}{}
+
+\DeclareRobustCommand\sygkj{\kanjifamily{sygk}\kanjiseries{j}\selectfont}
+\DeclareRobustCommand\sygkl{\kanjifamily{sygk}\kanjiseries{l}\selectfont}
+\DeclareRobustCommand\sygkr{\kanjifamily{sygk}\kanjiseries{d}\selectfont}
+\DeclareRobustCommand\sygkm{\kanjifamily{sygk}\kanjiseries{r}\selectfont}
+\DeclareRobustCommand\sygkd{\kanjifamily{sygk}\kanjiseries{m}\selectfont}
+\DeclareRobustCommand\sygkb{\kanjifamily{sygk}\kanjiseries{b}\selectfont}
+\DeclareRobustCommand\sygkh{\kanjifamily{sygk}\kanjiseries{h}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  思源黑体韓國版OTF  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% dvipdfmx special の発行
+\AtBeginDvi{%
+% 微 軟 字 體
+  \special{pdf:mapline otf-utmr-h	UniGB-UCS2-H	:0:simsun.ttc }
+  \special{pdf:mapline otf-utmr-v	UniGB-UCS2-V	:0:simsun.ttc }
+  \special{pdf:mapline otf-utgr-h	UniGB-UCS2-H	simhei.ttf }
+  \special{pdf:mapline otf-utgr-v	UniGB-UCS2-V	simhei.ttf }
+% adobe 字體
+  \special{pdf:mapline otf-ucmr-h	UniGB-UCS2-H	AdobeFangsongStd-Regular.otf}
+  \special{pdf:mapline otf-ucmr-v	UniGB-UCS2-V	AdobeFangsongStd-Regular.otf}
+  \special{pdf:mapline otf-ucgr-h	UniGB-UCS2-H	AdobeKaitiStd-Regular.otf }
+  \special{pdf:mapline otf-ucgr-v	UniGB-UCS2-V	AdobeKaitiStd-Regular.otf }
+  \special{pdf:mapline upstsl-h	UniGB-UTF16-H	AdobeSongStd-Light.otf}
+  \special{pdf:mapline upstsl-v	UniGB-UTF16-V	AdobeSongStd-Light.otf}
+  \special{pdf:mapline upstht-h UniGB-UTF16-H	AdobeHeitiStd-Regular.otf}
+  \special{pdf:mapline upstht-v UniGB-UTF16-V	AdobeHeitiStd-Regular.otf}
+% adobe 字体
+  \special{pdf:mapline otf-ucmr-h	UniGB-UCS2-H	AdobeFangsongStd-Regular.otf}
+  \special{pdf:mapline otf-ucmr-v	UniGB-UCS2-V	AdobeFangsongStd-Regular.otf}
+  \special{pdf:mapline otf-ucgr-h	UniGB-UCS2-H	AdobeKaitiStd-Regular.otf }
+  \special{pdf:mapline otf-ucgr-v	UniGB-UCS2-V	AdobeKaitiStd-Regular.otf }
+%	思源宋体 韓國版 OTF
+  \special{pdf:mapline symt-kr-j-jy2 unicode  SourceHanSerifK-ExtraLight.otf}%
+  \special{pdf:mapline symt-kr-j-jt2 unicode  SourceHanSerifK-ExtraLight.otf -w 1}%
+  \special{pdf:mapline symt-kr-l-jy2 unicode  SourceHanSerifK-Light.otf}%
+  \special{pdf:mapline symt-kr-l-jt2 unicode  SourceHanSerifK-Light.otf -w 1}%
+  \special{pdf:mapline symt-kr-r-jy2 unicode  SourceHanSerifK-Regular.otf}%
+  \special{pdf:mapline symt-kr-r-jt2 unicode  SourceHanSerifK-Regular.otf -w 1}%
+  \special{pdf:mapline symt-kr-m-jy2 unicode  SourceHanSerifK-Medium.otf}%
+  \special{pdf:mapline symt-kr-m-jt2 unicode  SourceHanSerifK-Medium.otf -w 1}%
+  \special{pdf:mapline symt-kr-d-jy2 unicode  SourceHanSerifK-SemiBold.otf}%
+  \special{pdf:mapline symt-kr-d-jt2 unicode  SourceHanSerifK-SemiBold.otf -w 1}%
+  \special{pdf:mapline symt-kr-b-jy2 unicode  SourceHanSerifK-Bold.otf}%
+  \special{pdf:mapline symt-kr-b-jt2 unicode  SourceHanSerifK-Bold.otf -w 1}%
+  \special{pdf:mapline symt-kr-h-jy2 unicode  SourceHanSerifK-Heavy.otf}%
+  \special{pdf:mapline symt-kr-h-jt2 unicode  SourceHanSerifK-Heavy.otf -w 1}%
+% 思源黑体 韓國版 OTF
+  \special{pdf:mapline syht-kr-j-jy2 unicode  SourceHanSansK-ExtraLight.otf}%
+  \special{pdf:mapline syht-kr-j-jt2 unicode  SourceHanSansK-ExtraLight.otf -w 1}%
+  \special{pdf:mapline syht-kr-l-jy2 unicode  SourceHanSansK-Light.otf}%
+  \special{pdf:mapline syht-kr-l-jt2 unicode  SourceHanSansK-Light.otf -w 1}%
+  \special{pdf:mapline syht-kr-d-jy2 unicode  SourceHanSansK-Normal.otf}%
+  \special{pdf:mapline syht-kr-d-jt2 unicode  SourceHanSansK-Normal.otf -w 1}%
+  \special{pdf:mapline syht-kr-r-jy2 unicode  SourceHanSansK-Regular.otf}%
+  \special{pdf:mapline syht-kr-r-jt2 unicode  SourceHanSansK-Regular.otf -w 1}%
+  \special{pdf:mapline syht-kr-m-jy2 unicode  SourceHanSansK-Medium.otf}%
+  \special{pdf:mapline syht-kr-m-jt2 unicode  SourceHanSansK-Medium.otf -w 1}%
+  \special{pdf:mapline syht-kr-b-jy2 unicode  SourceHanSansK-Bold.otf}%
+  \special{pdf:mapline syht-kr-b-jt2 unicode  SourceHanSansK-Bold.otf -w 1}%
+  \special{pdf:mapline syht-kr-h-jy2 unicode  SourceHanSansK-Heavy.otf}%
+  \special{pdf:mapline syht-kr-h-jt2 unicode  SourceHanSansK-Heavy.otf -w 1}%
+}
+
+
+% 定義的縱書右小字，單行割注
+\def\dahange#1{\raise0.45ex\hbox{\fontsize{11pt}{12}\mc\selectfont{}#1}}
+
+% 定義的縱書涌字（正文17pt@30pt行距、重複字元17pt@18pt行距、以文字基綫對齊）
+
+%重複一個字，如：太太、老太太、説説笑笑
+\def\odora{\leavevmode\kern-.3zw\raise0.05zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise.1zh\hbox{\mc\selectfont ヽ} \kern-.3zw}
+
+%重複兩個字，如：商量商量、考慮考慮；好好好；是是是
+\def\odorb{\leavevmode\kern-.1zw\raise0.15zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise.2zh\hbox{\mc\selectfont ヽ} \kern-.3zw
+    \leavevmode\kern-.55zw\raise-0.15zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise-.1zh\hbox{\mc\selectfont ヽ}\kern.1zw
+    }
+
+%重複三個字，如：了不起，了不起、快請起，快請起；
+\def\odorc{\leavevmode\kern-.15zw\raise0.15zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise.2zh\hbox{\mc\selectfont ヽ}\kern.1zw
+    \leavevmode\kern-.5zw\raise-0.2zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise-.1zh\hbox{\mc\selectfont ヽ}\kern.1zw
+    \leavevmode\kern-.55zw\raise0.05zh\hbox{\mc\selectfont ゝ}%
+    \kern-.69zw\raise.1zh\hbox{\mc\selectfont ヽ}\kern.2zw
+    }
+
+
+\makeatletter
+\def\marg{\fontsize{8pt}{12}\selectfont\mcfamily\bfseries}
+\def\biao{\@ifnextchar[{\@biao}{%
+ \@biao[無指定五字]}}
+\def\@biao[#1]{%
+ \list{}{%
+ \let\makelabel\biaolabel\settowidth{\labelwidth}{#1}%
+ \setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}%
+ \setlength{\parsep}{0pt}\setlength{\labelsep}{1zw}%
+ \addtolength{\labelsep}{2\kanjiskip}%
+ \setlength{\leftmargin}{\labelwidth}\addtolength{\leftmargin}{1zw}%
+ \addtolength{\leftmargin}{2\kanjiskip}
+ \setlength{\itemsep}{0pt}\setlength{\itemindent}{0pt}}}%
+\let\endbiao\endlist
+\def\biaolabel#1{\bfseries#1\hfill\inhibitglue}%
+\makeatother
+
+\def\dash{{\leavevmode\kern1mm\raise0.1zh\hbox{------}\kern1mm}}
+
+\endinput
+
+

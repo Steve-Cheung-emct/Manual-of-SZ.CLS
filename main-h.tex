@@ -1,0 +1,50 @@
+%#!使用uplatex 編譯
+\documentclass[uplatex,a4paper,10pt]{ujarticle}
+\usepackage{settings}% 字體配置
+\pagestyle{plain}
+\linespread{1.0} %使用割注時請勿修改文本行距，此處爲全局行距
+
+\usepackage{multicol}
+
+
+
+\begin{document}
+
+%\upstsl
+
+\symkm
+
+\title{\mcfamily\bfseries{up\LaTeX}{小川弘和}{SZ.CLS}{説明}}
+\author{子　康}
+\maketitle
+\begin{center}
+{\fontsize{10pt}{12}\selectfont\ttfamily
+ver.1.0a
+}
+\end{center}
+\vskip20mm
+
+
+
+\section{緣起}
+\par 本模板曾經被我用於《石頭記》垂直排版之用。現如今，將代碼托管到 GitHub ，
+以供愛好者們克隆使用。
+\par 本模板使用{up\LaTeX}或者{Up\TeX}進行編譯。
+
+\input{part2}
+
+\input{part3}
+
+\input{part4}
+
+
+\input{appendix}
+
+% 輸入封底
+\input{endpage-h}
+
+
+\end{document}
+
+
+

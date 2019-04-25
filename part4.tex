@@ -1,0 +1,86 @@
+\section{注意事項}
+
+\par 使用pxchfon包調用思源日版OTF字體時，默認采用jis2004的標點符號，即將逗號
+（，）轉寫為讀點（、）。而縱排時，jis2004的頓號是用的磅點（\verb+\CID{119}+），
+此符號在橫排中只占據半角字寬。
+
+\vspace{5mm}
+\par 使用 {\color{red}\verb+ptex2pdf -l -u -ot "-kanji=utf8 "  -od "-p B5" mysample+}
+ 命令編譯 PDF ，則會調用 ISO B5 紙張。實際紙張為 JIS B5。印前檢查時若不允許放縮，
+ 則應思考縮小版心尺寸，並縮小頁面尺寸及頁邊距。再次印前檢查時，使用{\color{red}\verb+100 % +} 放縮比例，
+ 製作裁切及出血標記。
+
+\subsection{已知問題}
+
+\begin{enumerate}
+\item 使用{\color{red}\verb+\setlength{\parindent}{2zw}+}或者
+{\color{red}\verb+\setlength{\parindent}{2em}+} 不會改變段落縮進。
+默認段落縮進為一個全角漢字。\\
+解決辦法：在\verb+\par{}+後面加入全角空格。注意：使用
+{\color{red}\verb+\par\noindent\qquad{}正文+}\quad
+可能也能實現功能，或者{\color{red}\verb+\par\quad{}正文+}。
+\item 部標題既不是水平居中，也不是垂直居中。
+\end{enumerate}
+
+\subsection{常見錯誤}
+\begin{enumerate}
+\item {\mc\bfseries{}問題一：找不到TFM，或者vf。}\\
+解決辦法：查找你的tfm、vf、以及字體配置文件。tfm和vf必須一一對應，
+而且配置文件裏頭不能寫錯了。比如大小寫錯，以及寫反、漏寫之類。
+
+\item {\mc\bfseries{}問題二：出現豆腐塊。字體無法正確顯示。}\\
+解決辦法：試圖尋找能顯示這個字的字體，并且爲之配置簡體中文。
+
+\item {\mc\bfseries{}問題三：看不到pdf，控制台一閃而過。}\\
+解決辦法：在脚本中加入一行 pause。使之在退出之前保持錯誤信息。
+
+\item {\mc\bfseries{}問題四：}\\
+\verb+{\contentsline {section}{\numberline {5}...+\\
+\verb+! File ended while scanning use of \@writefile.+\\
+\verb+<inserted text>+\\
+\hspace{10zw}\verb+ \par +\\
+解決辦法：先排查錯誤，刪除臨時文件，再重新編譯。
+\item {\mc\bfseries{}問題五：Windows 10 CMD 控制台 顯示漢字亂碼。}\\
+解決辦法：打開 {\color{red}編譯.bat}，在第一行寫入 {\color{red}chcp 65001}。
+\hspace{.5zw}65001 表示將控制台編碼切換到Unicode。
+
+\item {\mc\bfseries{}問題六：自定義的字體無法準確切換到下一行，行尾參差不齊。}\\
+解決辦法：打開PXcopyfont$>$TFM-source，將upstsl-h.tfm和upstsl-v.tfm 重命名為
+自定義字體的tfm名稱，替換掉出錯的tfm文件。注意h/v 一定要對應。
+一般采納JY2/JT2為{up\LaTeX}橫排和縱排時使用的字體。
+我們將upstsl-h.tfm改成foobar-jy2.tfm，upstsl-v.tfm改成foobar-jt2.tfm，
+替換掉出錯的tfm文件。
+
+
+\end{enumerate}
+
+\section{致謝}
+\par 感謝熊本学園大学経済学部\red{小川\hskip1zw 弘和}老師。
+\par 感謝湘南情報数理化学研究所\red{藤田\hskip1zw 眞作}老師。
+\par 感謝\red{阿部\hskip1zw 紀行}老師。
+\par 感謝\red{八登\hskip1zw 崇之}老師。
+\par 感謝大阪大學\red{金水\hskip1zw 敏}老師。
+
+%\clearpage
+
+\section{參考鏈接}
+
+\par\href{http://www2.kumagaku.ac.jp/teacher/herogw/}{JIS X0212 for pTeX - 熊本学園大学}
+%\vspace{5mm}
+\par \href{http://abenori.blogspot.com/2016/07/warichu-eplatex.html}{阿部紀行氏 jlreq.class 提取，warichus.sty 實裝 。}
+
+%\vspace{5mm}
+\par\href{http://xymtex.com/fujitas2/texlatex/index.html}{藤田眞作氏 頭注 下載網頁。}
+
+%\vspace{5mm}
+
+\par 
+\href{https://texwiki.texjp.org/?LaTeX%20%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8}{{up\LaTeX} 常見錯誤集錦。\LaTeX のエラーメッセージ。}
+
+
+\par {up\LaTeX} 字體配置相關參考網頁：
+\par\url{https://qiita.com/zr_tex8r/items/15ec2848371ec19d45ed}
+\par\url{https://qiita.com/zr_tex8r/items/5c14042078b20edbfb07}
+\par\url{http://doratex.hatenablog.jp/entry/20161206/1480950097}
+
+\endinput
