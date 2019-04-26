@@ -106,7 +106,7 @@ bar.pdf為保存的文件名。
 \def\@authorfn{\@latex@warning@no@line{No \noexpand\authorfn given}}
 \end{lstlisting}
 
-
+\clearpage
 \par 雜項定義。
 \begin{lstlisting}[firstnumber=67]
 \newif\if@pdfm \@pdfmfalse
@@ -168,13 +168,19 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 \subsection{定義正文字號}
-\par 定義的正文字號為 10 pt。但會由於上一節中定義了度量衡\verb+\mag 913+，
-使得正文字號變爲 9.13 pt（行距18pt，變爲16.434 pt），相應的字號都會發生改變。
 
-\par \uwave{正文字號雖定義為10 pt，而實際上是 9 pt 系列。}
-\par 若要修改正文字體及行距為真實 \verb+10pt@18pt+ ，應將標準字號10 pt × 1.09529 倍，
-行距18 pt × 1.09529 倍，填入 行 106。對於其他字號，也這樣處理。
-%
+\par \uwave{正文字號雖定義為 10 pt，而實際上是 9 pt 系列。} \verb+\mag 913 + 
+參數必要的時候會挽救超出版面的漢字，如果值為 1000，當設置頭注時，行尾就會溢出
+約2個漢字並且得不到任何提示。 值為 913 正好可以解決這個 bug。 
+\verb+\mag 913 + 會將原本屬於 10 pt 系列的正文字型大小放縮成 9 pt 系列。 
+而此 9 pt 不是標準的小五字。
+
+\par 若要修改正文字體及行距為真實 \verb+10 pt @18 pt+ ，應將標準字號
+10 pt × 1.09529 倍，行距18 pt × 1.09529 倍，填入 行 106。
+對於其他字號，也這樣處理。
+\par 根據不同的正文字號基準，使用不同的設置，詳見第\ref{sec:intro}節
+（第\pageref{sec:intro} 頁）。
+\clearpage
 \begin{lstlisting}[firstnumber=105]
 \renewcommand{\normalsize}{% \normalsize=10pt@18pt
     \@setfontsize\normalsize\@xpt{18}%
@@ -192,7 +198,7 @@ bar.pdf為保存的文件名。
 \normalsize
 \end{lstlisting}
 
-\par 定義的全角字符寬度及高度。
+\par 【SZ.CLS】定義的全角字符寬度及高度。
 \begin{lstlisting}[firstnumber=116]
 \setbox0\hbox{\char\euc"A1A1}%
 \setlength\Cht{\ht0}
@@ -201,6 +207,17 @@ bar.pdf為保存的文件名。
 \setlength\Cvs{\baselineskip}
 \setlength\Chs{\wd0}
 \end{lstlisting}
+
+\par 【SZ10.CLS】定義的全角字符寬度及高度。
+\begin{lstlisting}[firstnumber=116]
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+\end{lstlisting}
+
 
 
 \par 古典字體設置。
@@ -219,6 +236,9 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 \subsection{其他字號定義}
+
+\par 根據不同的正文字號基準，使用不同的設置，詳見第\ref{sec:intro}節
+（第\pageref{sec:intro} 頁）。
 \begin{lstlisting}[firstnumber=137]
 \newcommand{\small}{%
   \@setfontsize\small\@ixpt{11}%
@@ -260,17 +280,45 @@ bar.pdf為保存的文件名。
 
 %\newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{33}}
 \newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{36}}   				    %\Huge= 25pt@36pt
+\end{lstlisting}
 
-%自定義的字號
-\newcommand{\bthuge}{\fontsize{60}{72} \selectfont }
-\newcommand{\btlarge}{\fontsize{48}{60}\selectfont }
-\newcommand{\tlarge}{\fontsize{36}{48}\selectfont }
-\newcommand{\ularge}{\fontsize{30}{48}\selectfont }
+\par 【全】關於 五號系列字體的定義。
+\begin{lstlisting}[firstnumber=177]
+\newcommand{\liuhao}{\@setfontsize\liuhao{6.572pt}{10}} % 六號
+\newcommand{\xiaowu}{\@setfontsize\xiaowu{9.895pt}{13.143}} % 小五
+\newcommand{\wuhao}{\@setfontsize\wuhao{11.544pt}{19.715}} % 五號
+\newcommand{\xiaosi}{\@setfontsize\xiaosi{13.193pt}{24.644}} % 小四
+\newcommand{\sihao}{\@setfontsize\sihao{15.392pt}{24.644}} % 四號
+\newcommand{\xiaosan}{\@setfontsize\xiaosan{16.49pt}{24.644}} % 小三
+\newcommand{\sanhao}{\@setfontsize\sanhao{17.59pt}{24.644}} % 三號
+\newcommand{\xiaoer}{\@setfontsize\xiaoer{19.789pt}{39.43}} % 小二
+\newcommand{\erhao}{\@setfontsize\erhao{24.187}{39.43}}  %（二號）
+\newcommand{\xiaoyi}{\@setfontsize\xiaoyi{26.386}{39.43}}  %（小一）
+\newcommand{\yihao}{\@setfontsize\yihao{28.584}{39.43}}  %（一號）
+\newcommand{\xiaochu}{\@setfontsize\xiaochu{39.578}{52.57}} %（小初）
+\newcommand{\chuhao}{\@setfontsize\chuhao{46.175}{52.57}} %（初號）
+\end{lstlisting}
+
+
+\par 【全】自定義的字號。
+\begin{lstlisting}[firstnumber=192]
+\newcommand{\bthuge}{\@setfontsize\bthuge{65.72}{78.86}}
+\newcommand{\btlarge}{\@setfontsize\btlarge{52.57}{65.72}}
+\newcommand{\tlarge}{\@setfontsize\tlarge{39.43}{52.57}}
+\newcommand{\ularge}{\@setfontsize\ularge{32.86}{52.57}}
+
+\newcommand{\szlarge}{%
+		\@setfontsize\szlarge{18.62pt}{32.86}%
+  	\abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  	\abovedisplayshortskip \z@ \@plus3\p@
+  	\belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   	\belowdisplayskip \abovedisplayskip%
+   	\let\@listi\@listI}
 \end{lstlisting}
 
 \subsection{引入其他依賴包}
-\par 可在main.tex 中使用 \verb+\usepackage{pxfonts}+，調用URW Garamond作爲西文字體。
-\begin{lstlisting}[firstnumber=184]
+\par 可在main.tex 中使用 \verb+\usepackage{pxfonts}+，調用 URW Palladio L 作爲西文字體。
+\begin{lstlisting}[firstnumber=205]
 \RequirePackage{multicol} %多欄
 \RequirePackage{type1cm} %type1cm字體
 \RequirePackage[expert,uplatex,deluxe]{otf} %字體包
@@ -278,7 +326,7 @@ bar.pdf為保存的文件名。
 
 \subsection{初始化各種長度變量}
 
-\begin{lstlisting}[firstnumber=188]
+\begin{lstlisting}[firstnumber=209]
 \setlength\voffset{0mm}
 \setlength\hoffset{0mm}
 
@@ -379,7 +427,7 @@ bar.pdf為保存的文件名。
 
 \subsection{重定義的cleardoublepage命令}
 
-\begin{lstlisting}[firstnumber=285]
+\begin{lstlisting}[firstnumber=306]
 \def\pltx@cleartorightpage{\clearpage\if@twoside
   \ifodd\c@page
     \iftdir
@@ -423,18 +471,19 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的另一些長度，文本框樣式}
 
-\begin{lstlisting}[firstnumber=325]
-\RequirePackage{plext}									%縱組顓用
-\RequirePackage{zhnumber}								%將數字轉化為帶單位，如 \zhnumber{9999} ，得九千九百九十九
-%\setlength\columnsep{3\Cwd}
-\setlength\columnsep{2\Cwd}							%中文縱書：欄間距兩個全角字
-\setlength\columnseprule{0\p@}					%雙欄 欄綫設定（無欄綫）
-\setlength\lineskip{1\p@}								%行間距 1pt
-\setlength\normallineskip{1\p@}					%正文行間距 1pt
-\renewcommand{\baselinestretch}{}				%置空基綫距離縮放因子
-\setlength\parskip{0\p@ \@plus \p@}			%段間距 1pt
-\setlength\parindent{1\Cwd}							%退格一個全角字（此處設定不會對全局縮進產生任何影響）
-\setlength\marginparsep{2\Cwd}					%頭注與正文之間應空格兩個全角字
+\begin{lstlisting}[firstnumber=346]
+\RequirePackage{plext}									% 縱組顓用
+\RequirePackage{plautopatch}						% 為 platex 打補丁
+\RequirePackage{zhnumber}								% 將數字轉化為帶單位，如 \zhnumber{9999}，得九千九百九十九
+%\setlength\columnsep{3\Cwd}						% 欄間距
+\setlength\columnsep{2\Cwd}							% 中文縱書：欄間距 2 個全角字
+\setlength\columnseprule{0\p@}					% 雙欄 欄綫設定（無欄綫）
+\setlength\lineskip{1\p@}								% 行間距 1 pt
+\setlength\normallineskip{1\p@}					% 正文行間距 1 pt
+\renewcommand{\baselinestretch}{}				% 置空基綫距離縮放因子
+\setlength\parskip{0\p@ \@plus \p@}			% 段間距 1 pt
+\setlength\parindent{1\Cwd}							% 退格 1 個全角字（此處設定不會對全局縮進產生任何影響）
+\setlength\marginparsep{21.9pt}					% 中文縱書：頭注與正文之間應空格 2 個全角字（即 20 pt ）
 \@lowpenalty   51
 \@medpenalty  151
 \@highpenalty 301
@@ -453,7 +502,7 @@ bar.pdf為保存的文件名。
 \subsection{頁眉頁碼設置 }
 
 \par 定義兩個計數器，其中 szpage 為前言頁碼，ppage 為章回頁碼，章回頁碼要依賴章計數器。
-\begin{lstlisting}[firstnumber=351]
+\begin{lstlisting}[firstnumber=372]
 \newcounter{chapter}
 \newcounter{ppage}[chapter]
 \setcounter{ppage}{1}
@@ -463,7 +512,7 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 \par 設置 plain 樣式。
-\begin{lstlisting}[firstnumber=358]
+\begin{lstlisting}[firstnumber=380]
 %PageStyle for dvipdfmx
 \if@pdfm
 %\RequirePackage[dvipdfm]{graphicx}%
@@ -515,7 +564,7 @@ bar.pdf為保存的文件名。
 
 
 \par 設置 前言頁碼 樣式。定義一個不包含章回標題但包含頁碼的方案。
-\begin{lstlisting}[firstnumber=406]
+\begin{lstlisting}[firstnumber=428]
   \def\ps@my{%
    \let\@mkboth\markboth
    \def\@oddfoot{%
@@ -559,7 +608,7 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 \par 定義用於 dvips 的頁眉頁碼。
-\begin{lstlisting}[firstnumber=445]
+\begin{lstlisting}[firstnumber=467]
 %PageStyle for dvips
 	\else
 \RequirePackage[dvips]{graphicx}%
@@ -608,7 +657,7 @@ bar.pdf為保存的文件名。
 \subsection{定義標題頁}
 
 \par 此標題頁一般很少用到。不如直接在 main.tex 中繪製。
-\begin{lstlisting}[firstnumber=489]
+\begin{lstlisting}[firstnumber=511]
 \def\p@thanks#1{\footnotemark
   \protected@xdef\@thanks{\@thanks
     \protect{\noindent$\m@th^\thefootnote$~#1\protect\par}}}
@@ -654,7 +703,7 @@ bar.pdf為保存的文件名。
 
 
 \par 標題為日本史學論文風格。
-\begin{lstlisting}[firstnumber=534]
+\begin{lstlisting}[firstnumber=556]
 \def\@maketitle{%
  \thispagestyle{empty}%
  \fboxsep5pt
@@ -676,11 +725,25 @@ bar.pdf為保存的文件名。
 %
 \subsection{文檔結構設定}
 
-\par 行 553，編號深度為2，即為部（0）、章（1）、節（2）編號。
-\par 可在main.tex 中使用\verb+\setcounter{secnumdepth}{xxx}+
+\begin{table}[H]
+\begin{center}
+\caption{関於編號深度的説明}
+\begin{tabular}{cccc}
+\hline
+序號（深度） & 命令& 説明 & 對應的book標題級數 \\ \hline
+0 & \verb+\part{部標題}+ & 部、冊標題 & 一級標題 \\
+1 & \verb+\chapter{章回標題}+ & 卷、章、囘標題 & 二級標題  \\
+2 & \verb+\section{節標題}+ & 節標題 & 三級標題 \\
+3 & \verb+\subsection{子節標題}+ & 子節標題 & 四級標題 \\
+4 & \verb+\subsubsection{子小節標題}+ & 子小節標題 & 五級標題 \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\par 可在main.tex 中使用\verb+\setcounter{secnumdepth}{x}+
 改變標題編號深度。
 %
-\begin{lstlisting}[firstnumber=552]
+\begin{lstlisting}[firstnumber=574]
 \newcommand*{\chaptermark}[1]{}
 \setcounter{secnumdepth}{2}			%標題編號深度
 
@@ -693,23 +756,10 @@ bar.pdf為保存的文件名。
 \newcounter{subparagraph}[paragraph]
 \end{lstlisting}
 
-\begin{table}[H]
-\begin{center}
-\caption{関於編號深度的説明}
-\begin{tabular}{cccc}
-\hline
-序號 & 命令& 説明 & 對應的book標題級數 \\ \hline
-0 & \verb+\part{部標題}+ & 部、冊標題 & 一級標題 \\
-1 & \verb+\chapter{章回標題}+ & 卷、章、囘標題 & 二級標題  \\
-2 & \verb+\section{節標題}+ & 節標題 & 三級標題 \\
-3 & \verb+\subsection{子節標題}+ & 子節標題 & 四級標題 \\
-4 & \verb+\subsubsection{子小節標題}+ & 子小節標題 & 五級標題 \\ \hline
-\end{tabular}
-\end{center}
-\end{table}
+
 
 \par 定義的章節數字計數器。
-\begin{lstlisting}[firstnumber=562]
+\begin{lstlisting}[firstnumber=585]
 \renewcommand{\thepart}{\kansuji\number\@arabic\c@part}
 %\renewcommand{\thechapter}{\kansuji\number\@arabic\c@chapter}
 %\renewcommand{\thesection}{\kansuji\number\@arabic\c@section}
@@ -728,7 +778,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的冊}
 
-\begin{lstlisting}[firstnumber=578]
+\begin{lstlisting}[firstnumber=600]
 \newcommand{\part}{%
   \if@openleft \cleardoublepage \else
   \if@openright \cleardoublepage \else \clearpage \fi \fi
@@ -780,7 +830,7 @@ bar.pdf為保存的文件名。
 \par 正文中使用雙欄時，應在正文中使用\verb+\cleardoublepage+清除雙欄並翻頁。
 \par 使用\verb+\usepackage{multirow}+ 和 \verb+\usepackage{multicol}+ 宏包，設置三欄時，
 應使用\verb+\cleardoublepage+清除三欄並翻頁。
-\begin{lstlisting}[firstnumber=620]
+\begin{lstlisting}[firstnumber=642]
 \newcommand{\@chapapp}{\prechaptername}
 \newcommand{\@chappos}{\postchaptername}
 
@@ -850,7 +900,7 @@ bar.pdf為保存的文件名。
 \subsubsection{定義的三級、四級和五級標題}
 
 \par 自定義章標題字體，可將\verb+\bfseries+ 改成自定義字體的命令。
-\begin{lstlisting}[firstnumber=685]
+\begin{lstlisting}[firstnumber=707]
 \newcommand{\section}{\@startsection{section}{1}{\z@}%
    {1.5\Cvs \@plus.5\Cvs \@minus.2\Cvs}%
    {.5\Cvs \@plus.3\Cvs}%
@@ -875,7 +925,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的附錄}
 
-\begin{lstlisting}[firstnumber=706]
+\begin{lstlisting}[firstnumber=728]
 \newcommand{\appendix}{\par
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
@@ -885,7 +935,7 @@ bar.pdf為保存的文件名。
 
 \subsection{看不懂的長度變量和標簽序號}
 
-\begin{lstlisting}[firstnumber=712]
+\begin{lstlisting}[firstnumber=734]
 \if@twocolumn
   \setlength\leftmargini {2em}
 \else
@@ -921,11 +971,11 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 
-\clearpage
+
 \subsection{定義的各種環境}
 
 \subsubsection{定義的數字列表環境}
-\begin{lstlisting}[firstnumber=746]
+\begin{lstlisting}[firstnumber=768]
 \renewenvironment{enumerate}
   {\ifnum \@enumdepth >\thr@@\@toodeep\else
    \advance\@enumdepth\@ne
@@ -960,7 +1010,7 @@ bar.pdf為保存的文件名。
 
 \par 使用時以 \verb+\begin{biao}[字字字字字字]\end{biao}+作爲框架；[字字字字字字]
 ，全角字的個數作爲關鍵詞的寬度，默認為五個漢字的寬度。\verb+\item[関鍵詞]+調用加粗明朝字。
-\begin{lstlisting}[firstnumber=775]
+\begin{lstlisting}[firstnumber=797]
 \def\biao{\@ifnextchar[{\@biao}{ \@biao[ 無指定五字 ]}}
 \def\@biao[#1]{%
  \list{}{%
@@ -977,7 +1027,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的無序列表描述環境二}
 
-\begin{lstlisting}[firstnumber=788]
+\begin{lstlisting}[firstnumber=810]
 \renewenvironment{itemize}
   {\ifnum \@itemdepth >\thr@@\@toodeep\else
    \advance\@itemdepth\@ne
@@ -1001,7 +1051,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的 description 描述環境}
 
-\begin{lstlisting}[firstnumber=805]
+\begin{lstlisting}[firstnumber=827]
 \newenvironment{description}
   {\list{}{\labelwidth\z@ \itemindent-\leftmargin
    \iftdir
@@ -1017,19 +1067,19 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的詩歌環境}
 
-\par \verb+%注意+ 処可改爲自定義字體，下同。
-\begin{lstlisting}[firstnumber=818]
+\par \verb+%注意！！+ 処可改爲自定義字體，下同。
+\begin{lstlisting}[firstnumber=840]
 \newenvironment{verse}
   {\let\\\@centercr
    \list{}{\itemsep\z@ \itemindent -1.5em%
-           \listparindent\itemindent \mcfamily %注意
+           \listparindent\itemindent \mcfamily %注意！！
            \rightmargin\leftmargin \advance\leftmargin 1.5em}%
            \item\relax}{\endlist}
 \end{lstlisting}
 
 \subsubsection{定義的引文環境}
 
-\begin{lstlisting}[firstnumber=825]
+\begin{lstlisting}[firstnumber=847]
 \newenvironment{quotation}
   {\list{}{ \mcfamily %注意！！
   				 \listparindent 1.5em%
@@ -1041,18 +1091,18 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的引文環境（懸挂縮進）}
 
-\begin{lstlisting}[firstnumber=834]
+\begin{lstlisting}[firstnumber=856]
 \newenvironment{hanging}
   {\let\\\@centercr
    \list{}{\itemsep\z@ \itemindent -5em%
-           \listparindent\itemindent \mcfamily %注意
+           \listparindent\itemindent \mcfamily %注意！！
            \rightmargin\leftmargin \advance\leftmargin 1.5em}%
            \item\relax}{\endlist}
 \end{lstlisting}
 
 \subsubsection{定義的quote環境}
 
-\begin{lstlisting}[firstnumber=841]
+\begin{lstlisting}[firstnumber=863]
 \newenvironment{quote}
   {\list{}%
            \item\relax}{\endlist}
@@ -1060,7 +1110,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的圖片環境}
 
-\begin{lstlisting}[firstnumber=844]
+\begin{lstlisting}[firstnumber=866]
 \newcounter{figure}[chapter]
 \renewcommand{\thefigure}{%
   \ifnum\c@chapter>\z@\thechapter{}?\fi\rensuji{\@arabic\c@figure}}
@@ -1079,7 +1129,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的表格環境}
 
-\begin{lstlisting}[firstnumber=857]
+\begin{lstlisting}[firstnumber=879]
 \newcounter{table}[chapter]
 \renewcommand{\thetable}{%
   \ifnum\c@chapter>\z@\thechapter{}?\fi\rensuji{\@arabic\c@table}}
@@ -1097,7 +1147,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的圖表標簽}
 
-\begin{lstlisting}[firstnumber=870]
+\begin{lstlisting}[firstnumber=892]
 \newlength\abovecaptionskip
 \newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
@@ -1120,7 +1170,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的公式環境}
 
-\begin{lstlisting}[firstnumber=887]
+\begin{lstlisting}[firstnumber=909]
 \setlength\arraycolsep{5\p@}
 \setlength\tabcolsep{6\p@}
 \setlength\arrayrulewidth{.4\p@}
@@ -1137,7 +1187,7 @@ bar.pdf為保存的文件名。
 \subsection{將和文字體作爲數學字體使用}
 
 \par 此開關將日語字體註冊為數學字體。默認 false 。
-\begin{lstlisting}[firstnumber=900]
+\begin{lstlisting}[firstnumber=922]
 \if@enablejfam
   \DeclareSymbolFont{mincho}{JY2}{mc}{m}{n}
   \DeclareSymbolFontAlphabet{\mathmc}{mincho}
@@ -1162,11 +1212,11 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的目錄}
 
-\par 定義的目錄深度為2，可在main.tex 中使用\verb+\setcounter{tocdepth}{xxx}+
+\par 定義的目錄深度為2，可在main.tex 中使用\verb+\setcounter{tocdepth}{x}+
 改變目錄深度。
 \par （詳見 表1 関於章節深度的説明）
 %
-\begin{lstlisting}[firstnumber=920]
+\begin{lstlisting}[firstnumber=942]
 \setcounter{tocdepth}{2}  %目錄深度
 %\newcommand{\@pnumwidth}{1.55em}
 \newcommand{\@pnumwidth}{3em}
@@ -1180,7 +1230,7 @@ bar.pdf為保存的文件名。
 
 \subsection{目錄格式}
 
-\begin{lstlisting}[firstnumber=931]
+\begin{lstlisting}[firstnumber=953]
 \def\@dottedtocline#1#2#3#4#5{%
   \ifnum #1>\c@tocdepth \else
     \vskip\toclineskip \@plus.2\p@
@@ -1202,7 +1252,7 @@ bar.pdf為保存的文件名。
 
 \subsection{関於目錄列表}
 
-\begin{lstlisting}[firstnumber=946]
+\begin{lstlisting}[firstnumber=972]
 % 在 class 里把关于页码的内容放到  \AtBeginDocument 里（见 class 末尾）
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\rensuji{#3}}}
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\@Kanji{#3}}}
@@ -1229,7 +1279,7 @@ bar.pdf為保存的文件名。
 
 \subsection{各級目錄列表的詳細定義}
 
-\begin{lstlisting}[firstnumber=971]
+\begin{lstlisting}[firstnumber=993]
 \newcommand*{\l@part}[2]{%
   \ifnum \c@tocdepth >-2\relax
     \addpenalty{-\@highpenalty}%
@@ -1271,7 +1321,7 @@ bar.pdf為保存的文件名。
 
 \subsection{圖片目錄和表格目錄}
 
-\begin{lstlisting}[firstnumber=1008]
+\begin{lstlisting}[firstnumber=1030]
 %% 圖片目錄
 \newcommand{\listoffigures}{%
   \if@twocolumn\@restonecoltrue\onecolumn
@@ -1298,7 +1348,7 @@ bar.pdf為保存的文件名。
 
 \subsection{関於BIB參考文獻及一些雜項}
 
-\begin{lstlisting}[firstnumber=1030]
+\begin{lstlisting}[firstnumber=1052]
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
 \newcommand{\newblock}{\hskip .11em\@plus.33em\@minus.07em}
@@ -1320,7 +1370,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的西暦與和暦}
 
-\begin{lstlisting}[firstnumber=1046]
+\begin{lstlisting}[firstnumber=1068]
 \newif(*\verb+\if西暦 \西暦false+*)
 \def(*\verb+\西暦 {\西暦true}+*)
 \def(*\verb+\和暦 {\西暦false}+*)
@@ -1355,7 +1405,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義標題文本}
 
-\begin{lstlisting}[firstnumber=1078]
+\begin{lstlisting}[firstnumber=1100]
 \newcommand{\prepartname}{ 第 }
 \newcommand{\postpartname}{ 冊 }
 \newcommand{\prechaptername}{ 第 }
@@ -1370,7 +1420,7 @@ bar.pdf為保存的文件名。
 
 \subsection{初始化頁碼樣式及其他}
 
-\begin{lstlisting}[firstnumber=1088]
+\begin{lstlisting}[firstnumber=1110]
 \pagestyle{plain}
 \pagenumbering{arabic}
 (*\verb+\西暦+*)
@@ -1390,7 +1440,7 @@ bar.pdf為保存的文件名。
 \subsection{定義的章回後注}
 
 \par 初始化變量。其中，行 1105 ，後注按章標題進行重置。
-\begin{lstlisting}[firstnumber=1103]
+\begin{lstlisting}[firstnumber=1125]
 \@definecounter{endnote}
 \def\theendnote{\arabic{endnote}}
 \@addtoreset{endnote}{chapter}
@@ -1400,7 +1450,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{全角括號和半角括號}
 
-\begin{lstlisting}[firstnumber=1107]
+\begin{lstlisting}[firstnumber=1129]
 %\def\@makeenmark{\kern -1.2zw \raisebox{.8zh}{\tiny （{\hbox{\yoko\expandafter\ajTsumesuji\expandafter*\expandafter{\number\@theenmark}}}）}}
 
 \def\@makeenmark{\kern -2zw \raisebox{.8zh}{\normalsize %
@@ -1412,7 +1462,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{内部詳細定義}
 
-\begin{lstlisting}[firstnumber=1113]
+\begin{lstlisting}[firstnumber=1135]
 \newdimen\endnotesep
 
 \def\endnote{\@ifnextchar[{\@xendnote}{\stepcounter
@@ -1470,7 +1520,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{後注序號的樣式}
 
-\begin{lstlisting}[firstnumber=1165]
+\begin{lstlisting}[firstnumber=1187]
 %\def\enoteformat{\parindent -1.3zw \leftskip 2.3zw %
 \def\enoteformat{\parindent -3zw \leftskip 4zw \rightskip 4zw%
 % \UTF{FE35}\hbox{\yoko\expandafter\ajTumesuji\expandafter*\expandafter{\number\@theenmark}}\UTF{FE36}}
@@ -1484,7 +1534,7 @@ bar.pdf為保存的文件名。
 
 \subsection{注文的輸出}
 
-\begin{lstlisting}[firstnumber=1173]
+\begin{lstlisting}[firstnumber=1195]
 \newlength\chuskip
 \setlength\chuskip{1zw}  							 %在正文中設置可覆蓋此句
 
@@ -1515,7 +1565,7 @@ bar.pdf為保存的文件名。
 \subsection{引入頭注}
 
 \par 引入頭注（眉批），并按章標題刷新。
-\begin{lstlisting}[firstnumber=1198]
+\begin{lstlisting}[firstnumber=1220]
 \RequirePackage{tochu}
 \@addtoreset{kcbango}{chapter}
 \end{lstlisting}
@@ -1523,7 +1573,7 @@ bar.pdf為保存的文件名。
 \subsection{雜項}
 
 \par 定義的 fake 破折號（曲綫救國）。
-\begin{lstlisting}[firstnumber=1202]
+\begin{lstlisting}[firstnumber=1224]
 \def\dash{{\leavevmode\kern1mm\raise0.1zh\hbox{\mgfamily{------}}\kern1mm}}
 \end{lstlisting}
 
@@ -1532,11 +1582,32 @@ bar.pdf為保存的文件名。
 \subsection{定義目錄頁碼格式}
 \par 因hyperref包會刷新目錄頁碼格式，導致目錄頁碼格式失效。
 \par 這裏使用 \verb+\AtBeginDocument+ 命令重新定義目錄頁碼格式（非常重要！！）
-\begin{lstlisting}[firstnumber=1205]
+\begin{lstlisting}[firstnumber=1227]
 \AtBeginDocument{%
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\zhnumber{#3}}}
 \def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\@Kanji{#3}}}
 }
+
+\newcommand{ (*\verb+\六+*)號 }{\liuhao}
+\newcommand{ (*\verb+\六+*)号 }{\liuhao}
+\newcommand{ (*\verb+\小+*)五 }{\xiaowu}
+\newcommand{ (*\verb+\五+*)號 }{\wuhao}
+\newcommand{ (*\verb+\五+*)号 }{\wuhao}
+\newcommand{ (*\verb+\小+*)四 }{\xiaosi}
+\newcommand{ (*\verb+\四+*)號 }{\sihao}
+\newcommand{ (*\verb+\四+*)号 }{\sihao}
+\newcommand{ (*\verb+\小+*)三 }{\xiaosan}
+\newcommand{ (*\verb+\三+*)號 }{\sanhao}
+\newcommand{ (*\verb+\三+*)号 }{\sanhao}
+\newcommand{ (*\verb+\小+*)二 }{\xiaoer}
+\newcommand{ (*\verb+\二+*)號 }{\erhao}
+\newcommand{ (*\verb+\二+*)号 }{\erhao}
+\newcommand{ (*\verb+\小+*)一 }{\xiaoyi}
+\newcommand{ (*\verb+\一+*)號 }{\yihao}
+\newcommand{ (*\verb+\一+*)号 }{\yihao}
+\newcommand{ (*\verb+\小+*)初 }{\xiaochu}
+\newcommand{ (*\verb+\初+*)號 }{\chuhao}
+\newcommand{ (*\verb+\初+*)号 }{\chuhao}
 
 \endinput
 \end{lstlisting}

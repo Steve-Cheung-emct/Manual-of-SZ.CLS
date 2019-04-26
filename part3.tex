@@ -1,3 +1,79 @@
+\section{Class 使用方法}
+
+\begin{table}[H]
+	\begin{center}
+{\fontsize{10pt}{12}\selectfont\ttfamily
+\begin{tabular}{|c|p{70mm}|p{75mm}|}
+ \hline%
+{序 號} & {入 例} & {說 明} \\ \hline %
+0 & \verb+\documentclass[pdfm,b5paper]{sz}+ & 小川原版class改，字號不嚴格對應標準字號。\\
+1 & \verb+\documentclass[pdfm,b5paper]{sz9}+ & 正文 9 pt 系列，按此實際字號換算class字號。\\
+2 & \verb+\documentclass[pdfm,b5paper]{sz10}+ & 正文 10 pt 系列（同上）。\\
+3 & \verb+\documentclass[pdfm,b5paper]{sz11}+ & 正文 11 pt 系列（同上）。\\
+4 & \verb+\documentclass[pdfm,b5paper]{sz12}+ & 正文 12 pt 系列（同上）。\\
+5 & \verb+\documentclass[pdfm,b5paper]{sz10x}+ & 正文 五號（10.5pb 合 10.53937 pt）系列。\\
+\hline%
+\end{tabular} }
+	\end{center}
+\end{table}
+
+\section{小川 弘和 SZ.CLS 字號對照表}\label{sec:intro}
+
+\subsection{正文 9 pt 系列}
+\begin{figure}[H]
+\begin{center}
+\caption{小川原版class改（sz.cls）}
+{ \includegraphics[scale=1]{figures/sz.pdf}}
+\end{center}
+\par 正文 9 pt 系列，字號不嚴格對應標準字號。
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\caption{正文 9 pt 系列（sz9.cls）}
+{ \includegraphics[scale=1]{figures/sz9.pdf}}
+\end{center}
+\par 正文 9 pt 系列，按此實際字號換算class字號。
+\end{figure}
+
+\subsection{正文 10 pt 系列}
+\begin{figure}[H]
+\begin{center}
+\caption{正文 10 pt 系列（sz10.cls）}
+{ \includegraphics[scale=1]{figures/sz10.pdf}}
+\end{center}
+\par 正文 10 pt 系列，按此實際字號換算class字號。
+\end{figure}
+
+\subsection{正文 11 pt 系列}
+\begin{figure}[H]
+\begin{center}
+\caption{正文 11 pt 系列（sz11.cls）}
+{ \includegraphics[scale=1]{figures/sz11.pdf}}
+\end{center}
+\par 正文 11 pt 系列，按此實際字號換算class字號。
+\end{figure}
+
+
+\subsection{正文 12 pt 系列}
+\begin{figure}[H]
+\begin{center}
+\caption{正文 12 pt 系列（sz12.cls）}
+{ \includegraphics[scale=1]{figures/sz12.pdf}}
+\end{center}
+\par 正文 12 pt 系列，按此實際字號換算class字號。
+\end{figure}
+
+\subsection{正文 五號 系列}
+\begin{figure}[H]
+\begin{center}
+\caption{正文 五號 系列（sz10x.cls）}
+{ \includegraphics[scale=1]{figures/sz10x.pdf}}
+\end{center}
+\par 正文  五號  系列，按此實際字號換算class字號。
+\end{figure}
+
+
 
 \section{up{\LaTeX}常用命令舉例}
 
@@ -24,19 +100,7 @@
 {詳見``如何使用 LaTeX 輸出豎版排版的文章或書籍？"}
 
 
-\section{小川 弘和 SZ.CLS 字號對照表}
-
-
-\begin{figure}[H]
-\begin{center}
-\fbox{\includegraphics[scale=1]{05.pdf}}
-\end{center}
-\end{figure}
-
-
-
-
-\clearpage
+%\clearpage
 
 \section{為up{\LaTeX}配置本地字體}
 
@@ -155,11 +219,11 @@ perl pxcopyfont.pl -o jis-v klee-db-jt1 r-klee-db-jt1
 \begin{figure}[H]
 \par\quad\marg{出力例：}
 \begin{center}
-\fbox{\includegraphics[width=0.6\textwidth]{06.pdf}}
+\fbox{\includegraphics[width=0.6\textwidth]{figures/06.pdf}}
 \end{center}
 \end{figure}
 
-\clearpage
+%\clearpage
 \subsection{簡體中文本地字體}
 
 \par{}參照前文
@@ -200,17 +264,17 @@ perl pxcopyfont.pl -o jis-v klee-db-jt1 r-klee-db-jt1
 \begin{center}
 \caption{pxchfon 等價命令}
 {\fontsize{8pt}{12}\selectfont\ttfamily
-\begin{tabular}{|l|l|}
+\begin{tabular}{|l|l|l|}
  \hline
- 命令 & 用途 \\ \hline
-$\backslash$setminchofont\{*.otf/*.ttf\} & 設置正文明朝體；\\
-$\backslash$setlightminchofont\{*.otf/*.ttf\} & 設置細明朝體；\\
-$\backslash$setboldminchofont\{*.otf/*.ttf\} & 設置粗明朝體；\\
-$\backslash$setgothicfont\{*.otf/*.ttf\} & 設置哥特體（細黑體）；\\
-$\backslash$setmediumgothicfont\{*.otf/*.ttf\} & 設置中等哥特體；\\
-$\backslash$setboldgothicfont\{*.otf/*.ttf\} & 設置粗哥特體；\\
-$\backslash$setxboldgothicfont\{*.otf/*.ttf\} & 設置特粗哥特體；\\
-$\backslash$setmarugothicfont\{*.otf/*.ttf\} & 設置丸書體（即圓體）。\\ \hline
+ OTF/TTF 命令 & TTC 命令 & 用途 \\ \hline
+$\backslash$setminchofont\{*.otf/*.ttf\} & $\backslash$setminchofont[番號]\{*.ttc\} & 設置正文明朝體；\\
+$\backslash$setlightminchofont\{*.otf/*.ttf\} & $\backslash$setlightminchofont[番號]\{*.ttc\} & 設置細明朝體；\\
+$\backslash$setboldminchofont\{*.otf/*.ttf\} & $\backslash$setboldminchofont[番號]\{*.ttc\} & 設置粗明朝體；\\
+$\backslash$setgothicfont\{*.otf/*.ttf\} & $\backslash$setgothicfont[番號]\{*.ttc\} & 設置哥特體（細黑體）；\\
+$\backslash$setmediumgothicfont\{*.otf/*.ttf\} & $\backslash$setmediumgothicfont[番號]\{*.ttc\} & 設置中等哥特體；\\
+$\backslash$setboldgothicfont\{*.otf/*.ttf\} & $\backslash$setboldgothicfont[番號]\{*.ttc\} & 設置粗哥特體；\\
+$\backslash$setxboldgothicfont\{*.otf/*.ttf\} & $\backslash$setxboldgothicfont[番號]\{*.ttc\} & 設置特粗哥特體；\\
+$\backslash$setmarugothicfont\{*.otf/*.ttf\} & $\backslash$setmarugothicfont[番號]\{*.ttc\} & 設置丸書體（即圓體）。\\ \hline
 \end{tabular} }
 \end{center}
 \end{table}
