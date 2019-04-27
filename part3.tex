@@ -262,11 +262,11 @@ perl pxcopyfont.pl -o jis-v klee-db-jt1 r-klee-db-jt1
 
 \begin{table}[H]
 \begin{center}
-\caption{pxchfon 等價命令}
+\caption{pxchfon 宏包等價命令}
 {\fontsize{8pt}{12}\selectfont\ttfamily
 \begin{tabular}{|l|l|l|}
  \hline
- OTF/TTF 命令 & TTC 命令 & 用途 \\ \hline
+ \multicolumn{1}{|c|}{OTF/TTF 命令} & \multicolumn{1}{|c|}{TTC 命令} & \multicolumn{1}{|c|}{用途} \\ \hline
 $\backslash$setminchofont\{*.otf/*.ttf\} & $\backslash$setminchofont[番號]\{*.ttc\} & 設置正文明朝體；\\
 $\backslash$setlightminchofont\{*.otf/*.ttf\} & $\backslash$setlightminchofont[番號]\{*.ttc\} & 設置細明朝體；\\
 $\backslash$setboldminchofont\{*.otf/*.ttf\} & $\backslash$setboldminchofont[番號]\{*.ttc\} & 設置粗明朝體；\\
@@ -322,7 +322,7 @@ $\backslash$setmarugothicfont\{*.otf/*.ttf\} & $\backslash$setmarugothicfont[番
 \caption{Adobe-Japan1-6 使用CID鍵調用特殊符號 示例}
 \begin{tabular}{|c|c|c|}
 \hline
- 入例 & 出例 & \\ \hline
+ 入例 & 出例 & 說明\\ \hline
 \verb+\CID{1260}+ & \CID{1260} & “永”字 \\
 \verb+\CID{119}+ & \hskip.3zw\CID{119} & 垂直磅點，用於縱書 \\
 \verb+\CID{8015}+ & \CID{8015} & 圓角方框 \\
