@@ -5,10 +5,10 @@
 %   First released:   2004/03/12 v0.2  小川 弘和
 %		website:					http://www2.kumagaku.ac.jp/teacher/herogw/
 %   Modified by:      Steve Cheung 子 康
-%   Modified date:    2019/01/25 -- today 2019/04/24
+%   Modified date:    2019/01/25 -- today 2019/05/12
 %
 \NeedsTeXFormat{pLaTeX2e}
-\ProvidesClass{sz}[2019/04/03 v1.0b ShigakuZasshi type pLaTeX class]
+\ProvidesClass{sz}[2019/05/12 v1.1b ShigakuZasshi type pLaTeX class]
 \end{lstlisting}
 
 \subsection{定義的 JIS A 系列和 B 系列紙張}
@@ -136,15 +136,40 @@ bar.pdf為保存的文件名。
 }
 \end{lstlisting}
 
+\subsection{定義調用字號的條件語句}
+\begin{lstlisting}[firstnumber=89]
+\newcounter{@fonsize}
+\newif\if@setfonsizesc \@setfonsizescfalse				% 定義  9 pt(fake) 為正文字號基準，設置 mag 為 913
+\newif\if@setfonsizeix \@setfonsizeixfalse				% 定義  9 pt 為正文字號基準，設置 mag 為 913
+\newif\if@setfonsizex \@setfonsizexfalse					% 定義 10 pt 為正文字號基準，設置 mag 為 913
+\newif\if@setfonsizexi \@setfonsizexifalse				% 定義 11 pt 為正文字號基準，設置 mag 為 913
+\newif\if@setfonsizexii \@setfonsizexiifalse			% 定義 12 pt 為正文字號基準，設置 mag 為 913
+\newif\if@setfonsizexz \@setfonsizexzfalse				% 定義  小四 為正文字號基準，設置 mag 為 913
+%
+\DeclareOption{sz}{\setcounter{@fonsize}{1}%  9 pt @ fake
+\@setfonsizesctrue}
+\DeclareOption{szix}{\setcounter{@fonsize}{2}%  9 pt @ real
+\@setfonsizeixtrue}
+\DeclareOption{szx}{\setcounter{@fonsize}{2}% 10 pt 默認
+\@setfonsizextrue}
+\DeclareOption{szxi}{\setcounter{@fonsize}{3}%  11 pt
+\@setfonsizexitrue}
+\DeclareOption{szxii}{\setcounter{@fonsize}{4}% 12 pt
+\@setfonsizexiitrue}
+\DeclareOption{xz}{\setcounter{@fonsize}{5}% 小四
+\@setfonsizexztrue}
+\end{lstlisting}
+
+
 \subsection{默認佈局以及執行選項}
 
 \par [pdfm] 選項表示調用 dvipdfmx 編譯 pdf 。
-\par 行 96，執行[pdfm] 選項；	JIS B5 紙張（寬 182 mm，高 257 mm）；\\\hskip2zw
+\par 行 117，執行[pdfm] 選項；	JIS B5 紙張（寬 182 mm，高 257 mm）；\\\hskip2zw
 定稿；左開；垂直排版；雙面對稱佈局；單欄。
 \par {\mc\textbf{注意}}：使用\par
 {\centering{\color{red}\verb+ptex2pdf -l -u -ot "-kanji=utf8 "  -od "-p B5" mysample+}\par}\noindent
 \hspace{5.5zw}命令編譯 pdf 時，將使用 ISO B5 紙張（寬 176 mm，高 250 mm）。
-\begin{lstlisting}[firstnumber=89]
+\begin{lstlisting}[firstnumber=110]
 \DeclareOption{pdfm}{\@pdfmtrue}
 \DeclareOption{openright}{\@openrighttrue\@openleftfalse}
 \DeclareOption{openleft}{\@openlefttrue\@openrightfalse}
@@ -156,11 +181,14 @@ bar.pdf為保存的文件名。
 \ProcessOptions\relax
 \end{lstlisting}
 
+\par 定義的編碼方式為 JT2 表示垂直排版。
 \par \verb+\mag 913+ 將度量衡縮放至 0.913 倍。 
 版心縮小，使得邊注區產生更大的空間。
-\par 100 行和101行 將頁面還原囘標準紙。
-\par 102 行定義baseline為15pt。
-\begin{lstlisting}[firstnumber=99]
+\par 124 行和125行 將頁面還原囘標準紙。
+\par 126 行定義baseline為15pt。
+\begin{lstlisting}[firstnumber=121]
+\def\kanjiencodingdefault{JT2}%
+\kanjiencoding{\kanjiencodingdefault}%
   \mag 913 % formerly 900
   \setlength\paperwidth{1.09529\paperwidth}%
   \setlength\paperheight{1.09529\paperheight}%
@@ -169,19 +197,31 @@ bar.pdf為保存的文件名。
 
 \subsection{定義正文字號}
 
-\par \uwave{正文字號雖定義為 10 pt，而實際上是 9 pt 系列。} \verb+\mag 913 + 
-參數必要的時候會挽救超出版面的漢字，如果值為 1000，當設置頭注時，行尾就會溢出
+\par \verb+\mag 913 + 
+參數必要的時候會挽救溢出版面的漢字，如果值為 1000，當設置頭注時，行尾就會溢出
 約2個漢字並且得不到任何提示。 值為 913 正好可以解決這個 bug。 
 \verb+\mag 913 + 會將原本屬於 10 pt 系列的正文字型大小放縮成 9 pt 系列。 
 而此 9 pt 不是標準的小五字。
 
-\par 若要修改正文字體及行距為真實 \verb+10 pt @18 pt+ ，應將標準字號
-10 pt × 1.09529 倍，行距18 pt × 1.09529 倍，填入 行 106。
-對於其他字號，也這樣處理。
 \par 根據不同的正文字號基準，使用不同的設置，詳見第\ref{sec:intro}節
 （第\pageref{sec:intro} 頁）。
-\clearpage
-\begin{lstlisting}[firstnumber=105]
+
+\subsubsection{判斷字號選項}
+判斷字號選項，如未指定，則默認為 10 pt
+\begin{lstlisting}[firstnumber=131]
+\if@setfonsizesc  \else%
+\if@setfonsizeix  \else%
+ \if@setfonsizex  \else%
+ 	\if@setfonsizexi  \else%
+ 		\if@setfonsizexii  \else%
+ 			\if@setfonsizexz \else%
+ 			\@setfonsizextrue % 10 pt 默認
+ 		\fi	\fi \fi \fi \fi \fi
+\end{lstlisting}
+
+\subsubsection{正文字號基準為9pt（fake）}
+\begin{lstlisting}[firstnumber=143]
+%% 定義正文字號
 \renewcommand{\normalsize}{% \normalsize=10pt@18pt
     \@setfontsize\normalsize\@xpt{18}%
   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
@@ -189,57 +229,16 @@ bar.pdf為保存的文件名。
   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
-\end{lstlisting}
 
-\par 定義的編碼方式為 JT2 表示垂直排版。
-\begin{lstlisting}[firstnumber=113]
-\def\kanjiencodingdefault{JT2}%
-\kanjiencoding{\kanjiencodingdefault}%
 \normalsize
-\end{lstlisting}
-
-\par 【SZ.CLS】定義的全角字符寬度及高度。
-\begin{lstlisting}[firstnumber=116]
 \setbox0\hbox{\char\euc"A1A1}%
 \setlength\Cht{\ht0}
 \setlength\Cdp{\dp0}
 \setlength\Cwd{\wd0}
 \setlength\Cvs{\baselineskip}
 \setlength\Chs{\wd0}
-\end{lstlisting}
 
-\par 【SZ10.CLS】定義的全角字符寬度及高度。
-\begin{lstlisting}[firstnumber=116]
-\setbox0\hbox{\char\euc"A1A1}%
-\setlength\Cht{1.09529\ht0}
-\setlength\Cdp{1.09529\dp0}
-\setlength\Cwd{1.09529\wd0}
-\setlength\Cvs{1.09529\baselineskip}
-\setlength\Chs{1.09529\wd0}
-\end{lstlisting}
-
-
-
-\par 古典字體設置。
-\begin{lstlisting}[firstnumber=124]
-\DeclareOldFontCommand{\mc}{\normalfont\mcfamily}{\mathmc}
-\DeclareOldFontCommand{\gt}{\normalfont\gtfamily}{\mathgt}
-\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
-\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
-\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
-\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
-\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
-\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
-\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
-\DeclareRobustCommand*{\cal}{\@fontswitch\relax\mathcal}
-\DeclareRobustCommand*{\mit}{\@fontswitch\relax\mathnormal}
-\end{lstlisting}
-
-\subsection{其他字號定義}
-
-\par 根據不同的正文字號基準，使用不同的設置，詳見第\ref{sec:intro}節
-（第\pageref{sec:intro} 頁）。
-\begin{lstlisting}[firstnumber=137]
+% 字號設定
 \newcommand{\small}{%
   \@setfontsize\small\@ixpt{11}%
   \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
@@ -252,7 +251,7 @@ bar.pdf為保存的文件名。
   \belowdisplayskip \abovedisplayskip}
 
 \newcommand{\footnotesize}{%
-  \@setfontsize\footnotesize\@viiipt{9.5}%
+  \@setfontsize\footnotesize\@viiipt{10}%
   \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
   \abovedisplayshortskip \z@ \@plus\p@
   \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
@@ -264,26 +263,318 @@ bar.pdf為保存的文件名。
 
 % 字號設定
 \newcommand{\tiny}{\@setfontsize\tiny\@viipt\@ixpt}					    %\tiny= 7pt@9pt
-
-%\newcommand{\scriptsize}{\@setfontsize\scriptsize\@viipt\@viiipt}
-\newcommand{\scriptsize}{\@setfontsize\scriptsize\@xpt\@xiipt} %\scriptsize=10pt@12pt
-
+\newcommand{\scriptsize}{\@setfontsize\scriptsize\@xipt\@xiipt} %\scriptsize=11pt@12pt
 \newcommand{\large}{\@setfontsize\large\@xiipt{18}}				      %\large= 12pt@18pt
 \newcommand{\Large}{\@setfontsize\Large\@xivpt{22}}				      %\Large= 14pt@22pt
-
 %\newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{25}}
 \newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{30}}  			    %\LARGE= 17pt@30pt
 
+	%		因正文夾注排版需要特將此設定爲 2 倍行距为宜
 
 %\newcommand{\huge}{\@setfontsize\huge\@xxpt{28}}
 \newcommand{\huge}{\@setfontsize\huge\@xxpt{30}}    				    %\huge= 20pt@30pt
-
 %\newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{33}}
 \newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{36}}   				    %\Huge= 25pt@36pt
+
+\fi % from \if@setfonsizeix % 設置 正文字號基準為 9 pt(fake)
 \end{lstlisting}
 
-\par 【全】關於 五號系列字體的定義。
-\begin{lstlisting}[firstnumber=177]
+\subsubsection{正文字號基準為 9 pt（real）}
+\begin{lstlisting}[firstnumber=199]
+\if@setfonsizeix % 設置 正文字號基準為 9 pt(real)
+%% 定義正文字號
+\renewcommand{\normalsize}{% \normalsize = 9pt@18pt
+    \@setfontsize\normalsize{9.86pt}{19.715}%
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+\normalsize
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+
+% 字號設定
+\newcommand{\small}{%  \small = 8 pt @12pt
+  \@setfontsize\small{8.76pt}{13.143}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+\newcommand{\footnotesize}{% \footnotesize = 7 pt@12pt
+  \@setfontsize\footnotesize{7.667pt}{13.143}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+% 字號設定
+\newcommand{\tiny}{\@setfontsize\tiny{6.572pt}{9.858}}					    %\tiny = 6 pt@9pt
+\newcommand{\scriptsize}{\@setfontsize\scriptsize{10.95pt}{13.143}} %\scriptsize=10pt@12pt
+\newcommand{\large}{\@setfontsize\large{12.05pt}{19.715}}				      %\large = 11pt@18pt
+\newcommand{\Large}{\@setfontsize\Large{14.24pt}{24.096}}				      %\Large = 13pt@22pt
+%\newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{25}}
+\newcommand{\LARGE}{\@setfontsize\LARGE{16.43pt}{30.67}}  			    %\LARGE = 15pt@28pt
+%\newcommand{\huge}{\@setfontsize\huge\@xxpt{28}}
+\newcommand{\huge}{\@setfontsize\huge{18.62pt}{32.86}}    				    %\huge = 17pt@30pt
+%\newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{33}}
+\newcommand{\Huge}{\@setfontsize\Huge{21.91pt}{32.86}}   				    %\Huge = 20pt@30pt
+
+\fi % from \if@setfonsizeix % 設置 正文字號基準為 9 pt(real)
+
+\end{lstlisting}
+
+
+\subsubsection{正文字號基準為 10 pt（默認選項）}
+\begin{lstlisting}[firstnumber=254]
+\if@setfonsizex % 設置 正文字號基準為 10 pt
+%% 定義正文字號
+\renewcommand{\normalsize}{% \normalsize = 10pt@18pt
+    \@setfontsize\normalsize{10.953pt}{19.715}%
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+\normalsize
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+
+% 字號設定
+\newcommand{\small}{%  \small = 9 pt @12pt
+  \@setfontsize\small{9.86pt}{13.143}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+\newcommand{\footnotesize}{% \footnotesize = 8 pt@12pt
+  \@setfontsize\footnotesize{8.76pt}{13.143}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+% 字號設定
+\newcommand{\tiny}{\@setfontsize\tiny{6.572pt}{9.858}}					 			   %\tiny = 6 pt@9pt
+\newcommand{\scriptsize}{\@setfontsize\scriptsize{12.049pt}{13.143}}		 %\scriptsize=11pt@12pt
+\newcommand{\large}{\@setfontsize\large{13.143pt}{19.715}}				   	   %\large = 12pt@18pt
+\newcommand{\Large}{\@setfontsize\Large{15.334pt}{24.096}}				   	   %\Large = 14pt@22pt
+%\newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{25}}
+\newcommand{\LARGE}{\@setfontsize\LARGE{18.62pt}{32.86}}  			  			 %\LARGE = 17pt@30pt
+%\newcommand{\huge}{\@setfontsize\huge\@xxpt{28}}
+\newcommand{\huge}{\@setfontsize\huge{21.906pt}{32.86}}    				 			 %\huge = 20pt@30pt
+%\newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{33}}
+\newcommand{\Huge}{\@setfontsize\Huge{27.382pt}{39.43}}   						   %\Huge = 25pt@36pt
+
+\fi % from \if@setfonsizex % 設置 正文字號基準為 10 pt （默認）
+\end{lstlisting}
+
+\clearpage
+\subsubsection{正文字號基準為 11 pt}
+\begin{lstlisting}[firstnumber=309]
+\if@setfonsizexi % 設置 正文字號基準為 11 pt
+
+%% 定義正文字號
+\renewcommand{\normalsize}{% \normalsize = 11pt@18pt
+    \@setfontsize\normalsize{12.05pt}{19.715}%
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+\normalsize
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+
+% 字號設定
+\newcommand{\small}{%  \small = 10 pt @12pt
+  \@setfontsize\small{10.953pt}{13.143}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+\newcommand{\footnotesize}{% \footnotesize = 9 pt@12pt
+  \@setfontsize\footnotesize{9.86pt}{13.143}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+% 字號設定
+\newcommand{\tiny}{\@setfontsize\tiny{6.572pt}{10}}								    %\tiny = 6 pt@9.13pt
+\newcommand{\scriptsize}{\@setfontsize\scriptsize{13.143pt}{13.143}} 	%\scriptsize=12pt@12pt
+\newcommand{\large}{\@setfontsize\large{14.24pt}{19.715}}				      %\large = 13pt@18pt
+\newcommand{\Large}{\@setfontsize\Large{16.43pt}{24.096}}				      %\Large = 15pt@22pt
+%\newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{25}}
+\newcommand{\LARGE}{\@setfontsize\LARGE{18.62pt}{32.86}}  			 		  %\LARGE = 17pt@30pt
+\newcommand{\huge}{\@setfontsize\huge{21.906pt}{32.86}}    				    %\huge = 20pt@30pt
+\newcommand{\Huge}{\@setfontsize\Huge{27.382pt}{39.43}}   				    %\Huge = 25pt@36pt
+
+\fi % from \if@setfonsizexi % 設置 正文字號基準為 11 pt
+\end{lstlisting}
+
+
+\subsubsection{正文字號基準為 12 pt}
+\begin{lstlisting}[firstnumber=363]
+\if@setfonsizexii  % 設置 正文字號基準為 12 pt
+%% 定義正文字號
+\renewcommand{\normalsize}{% \normalsize = 12pt@18pt
+    \@setfontsize\normalsize{13.143pt}{19.715}%
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+\normalsize
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+
+% 字號設定
+\newcommand{\small}{%  \small = 11 pt @12pt
+  \@setfontsize\small{12.05pt}{13.143}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+\newcommand{\footnotesize}{% \footnotesize = 10 pt@12pt
+  \@setfontsize\footnotesize{10.95pt}{13.143}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+% 字號設定
+\newcommand{\tiny}{\@setfontsize\tiny{8.76pt}{9.13}}					 				   %\tiny = 8 pt @ 10 pt
+\newcommand{\scriptsize}{\@setfontsize\scriptsize{14.24pt}{19.715}} 	   %\scriptsize=13pt@18pt
+\newcommand{\large}{\@setfontsize\large{15.334pt}{19.715}}					     %\large = 14pt@18pt
+\newcommand{\Large}{\@setfontsize\Large{18.62pt}{30.67}}				      	 %\Large = 17pt@28pt
+%\newcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{25}}
+\newcommand{\LARGE}{\@setfontsize\LARGE{21.91pt}{32.86}}  					     %\LARGE = 20pt@30pt
+\newcommand{\huge}{\@setfontsize\huge{26.29pt}{32.86}}    				       %\huge = 24pt@30pt
+\newcommand{\Huge}{\@setfontsize\Huge{30.67pt}{39.43}}   				    		 %\Huge = 28pt@36pt
+
+\fi % from \if@setfonsizexii  % 設置 正文字號基準為 12 pt
+\end{lstlisting}
+
+
+\subsubsection{正文字號基準為 小四}
+\begin{lstlisting}[firstnumber=416]
+\if@setfonsizexz  % 設置 正文字號基準為 小四
+
+%% 定義正文字號
+\renewcommand{\normalsize}{% \normalsize = 10.53937pt@18pt （五號）
+    \@setfontsize\normalsize{11.544pt}{19.715}%
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+
+\normalsize
+\setbox0\hbox{\char\euc"A1A1}%
+\setlength\Cht{1.09529\ht0}
+\setlength\Cdp{1.09529\dp0}
+\setlength\Cwd{1.09529\wd0}
+\setlength\Cvs{1.09529\baselineskip}
+\setlength\Chs{1.09529\wd0}
+
+% 字號設定
+\newcommand{\small}{%  \small = 9.03374 pt @12pt （小五）
+  \@setfontsize\small{9.895pt}{13.143}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+\newcommand{\footnotesize}{% \footnotesize = 8 pt@12pt
+  \@setfontsize\footnotesize{9pt}{13.143}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+
+% 字號設定
+\newcommand{\tiny}{\@setfontsize\tiny{8.245pt}{10.95}}					     %\tiny = 7.52812 pt@10pt （六號）
+\newcommand{\scriptsize}{\@setfontsize\scriptsize{8.762pt}{13.143}}	 %\scriptsize=8pt@12pt
+\newcommand{\large}{\@setfontsize\large{13.193pt}{24.644}}	  		   %\large = 12.045pt@22.5pt （小四）
+\newcommand{\Large}{\@setfontsize\Large{15.392pt}{24.644}}	  		   %\Large = 14.05249pt@22.5pt （四號）
+\newcommand{\LARGE}{\@setfontsize\LARGE{16.49pt}{24.644}}  				   %\LARGE = 15.05624pt@22.5pt （小三）
+%\newcommand{\huge}{\@setfontsize\huge\@xxpt{28}}
+\newcommand{\huge}{\@setfontsize\huge{17.59pt}{24.644}}    				   %\huge = 16.06pt@22.5pt （三號）
+%\newcommand{\Huge}{\@setfontsize\Huge\@xxvpt{33}}
+\newcommand{\Huge}{\@setfontsize\Huge{19.789pt}{27.38}}   				   %\Huge = 18.06749pt@25pt （小二）
+
+\fi % from \if@setfonsizexz  % 設置 正文字號基準為 小四
+\end{lstlisting}
+
+\subsubsection{額外定義的 小四 基準}
+
+\par 關於 五號系列字體的定義。
+\begin{lstlisting}[firstnumber=473]
 \newcommand{\liuhao}{\@setfontsize\liuhao{6.572pt}{10}} % 六號
 \newcommand{\xiaowu}{\@setfontsize\xiaowu{9.895pt}{13.143}} % 小五
 \newcommand{\wuhao}{\@setfontsize\wuhao{11.544pt}{19.715}} % 五號
@@ -300,14 +591,14 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 
-\par 【全】自定義的字號。
-\begin{lstlisting}[firstnumber=192]
+\par 【全】其他自定義的字號。
+\begin{lstlisting}[firstnumber=488]
 \newcommand{\bthuge}{\@setfontsize\bthuge{65.72}{78.86}}
 \newcommand{\btlarge}{\@setfontsize\btlarge{52.57}{65.72}}
 \newcommand{\tlarge}{\@setfontsize\tlarge{39.43}{52.57}}
 \newcommand{\ularge}{\@setfontsize\ularge{32.86}{52.57}}
 
-\newcommand{\szlarge}{%
+\newcommand{\szlarge}{%  特定的兩倍行距正文基準， \szlarge = 17 pt @ 30 pt
 		\@setfontsize\szlarge{18.62pt}{32.86}%
   	\abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
   	\abovedisplayshortskip \z@ \@plus3\p@
@@ -316,9 +607,26 @@ bar.pdf為保存的文件名。
    	\let\@listi\@listI}
 \end{lstlisting}
 
+
+%\clearpage
+\par 古典字體設置。
+\begin{lstlisting}[firstnumber=502]
+\DeclareOldFontCommand{\mc}{\normalfont\mcfamily}{\mathmc}
+\DeclareOldFontCommand{\gt}{\normalfont\gtfamily}{\mathgt}
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\DeclareRobustCommand*{\cal}{\@fontswitch\relax\mathcal}
+\DeclareRobustCommand*{\mit}{\@fontswitch\relax\mathnormal}
+\end{lstlisting}
+
 \subsection{引入其他依賴包}
 \par 可在main.tex 中使用 \verb+\usepackage{pxfonts}+，調用 URW Palladio L 作爲西文字體。
-\begin{lstlisting}[firstnumber=205]
+\begin{lstlisting}[firstnumber=515]
 \RequirePackage{multicol} %多欄
 \RequirePackage{type1cm} %type1cm字體
 \RequirePackage[expert,uplatex,deluxe]{otf} %字體包
@@ -326,7 +634,7 @@ bar.pdf為保存的文件名。
 
 \subsection{初始化各種長度變量}
 
-\begin{lstlisting}[firstnumber=209]
+\begin{lstlisting}[firstnumber=519]
 \setlength\voffset{0mm}
 \setlength\hoffset{0mm}
 
@@ -427,7 +735,7 @@ bar.pdf為保存的文件名。
 
 \subsection{重定義的cleardoublepage命令}
 
-\begin{lstlisting}[firstnumber=306]
+\begin{lstlisting}[firstnumber=616]
 \def\pltx@cleartorightpage{\clearpage\if@twoside
   \ifodd\c@page
     \iftdir
@@ -471,7 +779,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的另一些長度，文本框樣式}
 
-\begin{lstlisting}[firstnumber=346]
+\begin{lstlisting}[firstnumber=657]
 \RequirePackage{plext}									% 縱組顓用
 \RequirePackage{plautopatch}						% 為 platex 打補丁
 \RequirePackage{zhnumber}								% 將數字轉化為帶單位，如 \zhnumber{9999}，得九千九百九十九
@@ -502,7 +810,7 @@ bar.pdf為保存的文件名。
 \subsection{頁眉頁碼設置 }
 
 \par 定義兩個計數器，其中 szpage 為前言頁碼，ppage 為章回頁碼，章回頁碼要依賴章計數器。
-\begin{lstlisting}[firstnumber=372]
+\begin{lstlisting}[firstnumber=683]
 \newcounter{chapter}
 \newcounter{ppage}[chapter]
 \setcounter{ppage}{1}
@@ -512,7 +820,7 @@ bar.pdf為保存的文件名。
 \end{lstlisting}
 
 \par 設置 plain 樣式。
-\begin{lstlisting}[firstnumber=380]
+\begin{lstlisting}[firstnumber=691]
 %PageStyle for dvipdfmx
 \if@pdfm
 %\RequirePackage[dvipdfm]{graphicx}%
@@ -564,7 +872,7 @@ bar.pdf為保存的文件名。
 
 
 \par 設置 前言頁碼 樣式。定義一個不包含章回標題但包含頁碼的方案。
-\begin{lstlisting}[firstnumber=428]
+\begin{lstlisting}[firstnumber=738]
   \def\ps@my{%
    \let\@mkboth\markboth
    \def\@oddfoot{%
@@ -604,11 +912,10 @@ bar.pdf為保存的文件名。
    \let\@oddhead\@empty
    \let\@evenhead\@empty
         }
-
 \end{lstlisting}
 
 \par 定義用於 dvips 的頁眉頁碼。
-\begin{lstlisting}[firstnumber=467]
+\begin{lstlisting}[firstnumber=778]
 %PageStyle for dvips
 	\else
 \RequirePackage[dvips]{graphicx}%
@@ -657,7 +964,7 @@ bar.pdf為保存的文件名。
 \subsection{定義標題頁}
 
 \par 此標題頁一般很少用到。不如直接在 main.tex 中繪製。
-\begin{lstlisting}[firstnumber=511]
+\begin{lstlisting}[firstnumber=822]
 \def\p@thanks#1{\footnotemark
   \protected@xdef\@thanks{\@thanks
     \protect{\noindent$\m@th^\thefootnote$~#1\protect\par}}}
@@ -703,7 +1010,7 @@ bar.pdf為保存的文件名。
 
 
 \par 標題為日本史學論文風格。
-\begin{lstlisting}[firstnumber=556]
+\begin{lstlisting}[firstnumber=867]
 \def\@maketitle{%
  \thispagestyle{empty}%
  \fboxsep5pt
@@ -731,11 +1038,11 @@ bar.pdf為保存的文件名。
 \begin{tabular}{cccc}
 \hline
 序號（深度） & 命令& 説明 & 對應的book標題級數 \\ \hline
-0 & \verb+\part{部標題}+ & 部、冊標題 & 一級標題 \\
-1 & \verb+\chapter{章回標題}+ & 卷、章、囘標題 & 二級標題  \\
-2 & \verb+\section{節標題}+ & 節標題 & 三級標題 \\
-3 & \verb+\subsection{子節標題}+ & 子節標題 & 四級標題 \\
-4 & \verb+\subsubsection{子小節標題}+ & 子小節標題 & 五級標題 \\ \hline
+-1 & \verb+\part{部標題}+ & 部、冊標題 & 一級標題 \\
+0 & \verb+\chapter{章回標題}+ & 卷、章、囘標題 & 二級標題  \\
+1 & \verb+\section{節標題}+ & 節標題 & 三級標題 \\
+2 & \verb+\subsection{子節標題}+ & 子節標題 & 四級標題 \\
+3 & \verb+\subsubsection{子小節標題}+ & 子小節標題 & 五級標題 \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -743,7 +1050,7 @@ bar.pdf為保存的文件名。
 \par 可在main.tex 中使用\verb+\setcounter{secnumdepth}{x}+
 改變標題編號深度。
 %
-\begin{lstlisting}[firstnumber=574]
+\begin{lstlisting}[firstnumber=885]
 \newcommand*{\chaptermark}[1]{}
 \setcounter{secnumdepth}{2}			%標題編號深度
 
@@ -759,7 +1066,7 @@ bar.pdf為保存的文件名。
 
 
 \par 定義的章節數字計數器。
-\begin{lstlisting}[firstnumber=585]
+\begin{lstlisting}[firstnumber=896]
 \renewcommand{\thepart}{\kansuji\number\@arabic\c@part}
 %\renewcommand{\thechapter}{\kansuji\number\@arabic\c@chapter}
 %\renewcommand{\thesection}{\kansuji\number\@arabic\c@section}
@@ -778,7 +1085,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的冊}
 
-\begin{lstlisting}[firstnumber=600]
+\begin{lstlisting}[firstnumber=911]
 \newcommand{\part}{%
   \if@openleft \cleardoublepage \else
   \if@openright \cleardoublepage \else \clearpage \fi \fi
@@ -826,11 +1133,11 @@ bar.pdf為保存的文件名。
 
 \par 自定義章標題字體，可將\verb+\mcfamily\bfseries+或者 \verb+\bfseries+
 改成自定義字體的命令。
-\par 定義翻一頁的章節標題，可在 行 654 行前增加 \verb+\clearpage+命令。
-\par 正文中使用雙欄時，應在正文中使用\verb+\cleardoublepage+清除雙欄並翻頁。
+\par 定義翻一頁的章節標題，可在 行 965 行前增加 \verb+\clearpage+ 命令。
+\par 正文中使用雙欄時，應在正文中使用\verb+\cleardoublepage+ 清除雙欄並翻頁。
 \par 使用\verb+\usepackage{multirow}+ 和 \verb+\usepackage{multicol}+ 宏包，設置三欄時，
 應使用\verb+\cleardoublepage+清除三欄並翻頁。
-\begin{lstlisting}[firstnumber=642]
+\begin{lstlisting}[firstnumber=953]
 \newcommand{\@chapapp}{\prechaptername}
 \newcommand{\@chappos}{\postchaptername}
 
@@ -900,7 +1207,7 @@ bar.pdf為保存的文件名。
 \subsubsection{定義的三級、四級和五級標題}
 
 \par 自定義章標題字體，可將\verb+\bfseries+ 改成自定義字體的命令。
-\begin{lstlisting}[firstnumber=707]
+\begin{lstlisting}[firstnumber=1018]
 \newcommand{\section}{\@startsection{section}{1}{\z@}%
    {1.5\Cvs \@plus.5\Cvs \@minus.2\Cvs}%
    {.5\Cvs \@plus.3\Cvs}%
@@ -925,7 +1232,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的附錄}
 
-\begin{lstlisting}[firstnumber=728]
+\begin{lstlisting}[firstnumber=1039]
 \newcommand{\appendix}{\par
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
@@ -935,7 +1242,7 @@ bar.pdf為保存的文件名。
 
 \subsection{看不懂的長度變量和標簽序號}
 
-\begin{lstlisting}[firstnumber=734]
+\begin{lstlisting}[firstnumber=1045]
 \if@twocolumn
   \setlength\leftmargini {2em}
 \else
@@ -975,7 +1282,7 @@ bar.pdf為保存的文件名。
 \subsection{定義的各種環境}
 
 \subsubsection{定義的數字列表環境}
-\begin{lstlisting}[firstnumber=768]
+\begin{lstlisting}[firstnumber=1079]
 \renewenvironment{enumerate}
   {\ifnum \@enumdepth >\thr@@\@toodeep\else
    \advance\@enumdepth\@ne
@@ -1010,7 +1317,7 @@ bar.pdf為保存的文件名。
 
 \par 使用時以 \verb+\begin{biao}[字字字字字字]\end{biao}+作爲框架；[字字字字字字]
 ，全角字的個數作爲關鍵詞的寬度，默認為五個漢字的寬度。\verb+\item[関鍵詞]+調用加粗明朝字。
-\begin{lstlisting}[firstnumber=797]
+\begin{lstlisting}[firstnumber=1108]
 \def\biao{\@ifnextchar[{\@biao}{ \@biao[ 無指定五字 ]}}
 \def\@biao[#1]{%
  \list{}{%
@@ -1027,7 +1334,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的無序列表描述環境二}
 
-\begin{lstlisting}[firstnumber=810]
+\begin{lstlisting}[firstnumber=1121]
 \renewenvironment{itemize}
   {\ifnum \@itemdepth >\thr@@\@toodeep\else
    \advance\@itemdepth\@ne
@@ -1051,7 +1358,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的 description 描述環境}
 
-\begin{lstlisting}[firstnumber=827]
+\begin{lstlisting}[firstnumber=1138]
 \newenvironment{description}
   {\list{}{\labelwidth\z@ \itemindent-\leftmargin
    \iftdir
@@ -1068,7 +1375,7 @@ bar.pdf為保存的文件名。
 \subsubsection{定義的詩歌環境}
 
 \par \verb+%注意！！+ 処可改爲自定義字體，下同。
-\begin{lstlisting}[firstnumber=840]
+\begin{lstlisting}[firstnumber=1151]
 \newenvironment{verse}
   {\let\\\@centercr
    \list{}{\itemsep\z@ \itemindent -1.5em%
@@ -1079,7 +1386,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的引文環境}
 
-\begin{lstlisting}[firstnumber=847]
+\begin{lstlisting}[firstnumber=1158]
 \newenvironment{quotation}
   {\list{}{ \mcfamily %注意！！
   				 \listparindent 1.5em%
@@ -1091,7 +1398,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的引文環境（懸挂縮進）}
 
-\begin{lstlisting}[firstnumber=856]
+\begin{lstlisting}[firstnumber=1167]
 \newenvironment{hanging}
   {\let\\\@centercr
    \list{}{\itemsep\z@ \itemindent -5em%
@@ -1102,7 +1409,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的quote環境}
 
-\begin{lstlisting}[firstnumber=863]
+\begin{lstlisting}[firstnumber=1174]
 \newenvironment{quote}
   {\list{}%
            \item\relax}{\endlist}
@@ -1110,7 +1417,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的圖片環境}
 
-\begin{lstlisting}[firstnumber=866]
+\begin{lstlisting}[firstnumber=1177]
 \newcounter{figure}[chapter]
 \renewcommand{\thefigure}{%
   \ifnum\c@chapter>\z@\thechapter{}?\fi\rensuji{\@arabic\c@figure}}
@@ -1129,7 +1436,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的表格環境}
 
-\begin{lstlisting}[firstnumber=879]
+\begin{lstlisting}[firstnumber=1190]
 \newcounter{table}[chapter]
 \renewcommand{\thetable}{%
   \ifnum\c@chapter>\z@\thechapter{}?\fi\rensuji{\@arabic\c@table}}
@@ -1147,7 +1454,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的圖表標簽}
 
-\begin{lstlisting}[firstnumber=892]
+\begin{lstlisting}[firstnumber=1203]
 \newlength\abovecaptionskip
 \newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
@@ -1170,7 +1477,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{定義的公式環境}
 
-\begin{lstlisting}[firstnumber=909]
+\begin{lstlisting}[firstnumber=1220]
 \setlength\arraycolsep{5\p@}
 \setlength\tabcolsep{6\p@}
 \setlength\arrayrulewidth{.4\p@}
@@ -1187,7 +1494,7 @@ bar.pdf為保存的文件名。
 \subsection{將和文字體作爲數學字體使用}
 
 \par 此開關將日語字體註冊為數學字體。默認 false 。
-\begin{lstlisting}[firstnumber=922]
+\begin{lstlisting}[firstnumber=1233]
 \if@enablejfam
   \DeclareSymbolFont{mincho}{JY2}{mc}{m}{n}
   \DeclareSymbolFontAlphabet{\mathmc}{mincho}
@@ -1216,7 +1523,7 @@ bar.pdf為保存的文件名。
 改變目錄深度。
 \par （詳見 表1 関於章節深度的説明）
 %
-\begin{lstlisting}[firstnumber=942]
+\begin{lstlisting}[firstnumber=1253]
 \setcounter{tocdepth}{2}  %目錄深度
 %\newcommand{\@pnumwidth}{1.55em}
 \newcommand{\@pnumwidth}{3em}
@@ -1230,7 +1537,7 @@ bar.pdf為保存的文件名。
 
 \subsection{目錄格式}
 
-\begin{lstlisting}[firstnumber=953]
+\begin{lstlisting}[firstnumber=1264]
 \def\@dottedtocline#1#2#3#4#5{%
   \ifnum #1>\c@tocdepth \else
     \vskip\toclineskip \@plus.2\p@
@@ -1252,7 +1559,7 @@ bar.pdf為保存的文件名。
 
 \subsection{関於目錄列表}
 
-\begin{lstlisting}[firstnumber=972]
+\begin{lstlisting}[firstnumber=1283]
 % 在 class 里把关于页码的内容放到  \AtBeginDocument 里（见 class 末尾）
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\rensuji{#3}}}
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\@Kanji{#3}}}
@@ -1279,7 +1586,7 @@ bar.pdf為保存的文件名。
 
 \subsection{各級目錄列表的詳細定義}
 
-\begin{lstlisting}[firstnumber=993]
+\begin{lstlisting}[firstnumber=1304]
 \newcommand*{\l@part}[2]{%
   \ifnum \c@tocdepth >-2\relax
     \addpenalty{-\@highpenalty}%
@@ -1321,7 +1628,7 @@ bar.pdf為保存的文件名。
 
 \subsection{圖片目錄和表格目錄}
 
-\begin{lstlisting}[firstnumber=1030]
+\begin{lstlisting}[firstnumber=1341]
 %% 圖片目錄
 \newcommand{\listoffigures}{%
   \if@twocolumn\@restonecoltrue\onecolumn
@@ -1348,7 +1655,7 @@ bar.pdf為保存的文件名。
 
 \subsection{関於BIB參考文獻及一些雜項}
 
-\begin{lstlisting}[firstnumber=1052]
+\begin{lstlisting}[firstnumber=1363]
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
 \newcommand{\newblock}{\hskip .11em\@plus.33em\@minus.07em}
@@ -1365,12 +1672,10 @@ bar.pdf為保存的文件名。
   \noindent\hbox to 2zw{\hss\@makefnmark}#1}
 \end{lstlisting}
 
-\par 行 1063，以章標題來重置脚注。
-
 
 \subsection{定義的西暦與和暦}
 
-\begin{lstlisting}[firstnumber=1068]
+\begin{lstlisting}[firstnumber=1379]
 \newif(*\verb+\if西暦 \西暦false+*)
 \def(*\verb+\西暦 {\西暦true}+*)
 \def(*\verb+\和暦 {\西暦false}+*)
@@ -1405,7 +1710,7 @@ bar.pdf為保存的文件名。
 
 \subsection{定義標題文本}
 
-\begin{lstlisting}[firstnumber=1100]
+\begin{lstlisting}[firstnumber=1411]
 \newcommand{\prepartname}{ 第 }
 \newcommand{\postpartname}{ 冊 }
 \newcommand{\prechaptername}{ 第 }
@@ -1413,6 +1718,9 @@ bar.pdf為保存的文件名。
 \newcommand{\contentsname}{ 目 \quad 次 }
 \newcommand{\listfigurename}{ 圖 \quad 目 \quad 次 }
 \newcommand{\listtablename}{ 表 \quad 目 \quad 次 }
+\newcommand{\refname}{ 参考文献 }
+\newcommand{\bibname}{ 参考文献 }
+\newcommand{\indexname}{ 索\quad 引}
 \newcommand{\figurename}{ 圖 }
 \newcommand{\tablename}{ 表 }
 \newcommand{\appendixname}{ 附 \quad 録 }
@@ -1420,7 +1728,7 @@ bar.pdf為保存的文件名。
 
 \subsection{初始化頁碼樣式及其他}
 
-\begin{lstlisting}[firstnumber=1110]
+\begin{lstlisting}[firstnumber=1424]
 \pagestyle{plain}
 \pagenumbering{arabic}
 (*\verb+\西暦+*)
@@ -1439,8 +1747,8 @@ bar.pdf為保存的文件名。
 
 \subsection{定義的章回後注}
 
-\par 初始化變量。其中，行 1127 ，後注按章標題進行重置。
-\begin{lstlisting}[firstnumber=1125]
+\par 初始化變量。其中，行 1441 ，後注按章標題進行重置。
+\begin{lstlisting}[firstnumber=1439]
 \@definecounter{endnote}
 \def\theendnote{\arabic{endnote}}
 \@addtoreset{endnote}{chapter}
@@ -1450,7 +1758,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{全角括號和半角括號}
 
-\begin{lstlisting}[firstnumber=1129]
+\begin{lstlisting}[firstnumber=1443]
 %\def\@makeenmark{\kern -1.2zw \raisebox{.8zh}{\tiny （{\hbox{\yoko\expandafter\ajTsumesuji\expandafter*\expandafter{\number\@theenmark}}}）}}
 
 \def\@makeenmark{\kern -2zw \raisebox{.8zh}{\normalsize %
@@ -1462,7 +1770,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{内部詳細定義}
 
-\begin{lstlisting}[firstnumber=1135]
+\begin{lstlisting}[firstnumber=1449]
 \newdimen\endnotesep
 
 \def\endnote{\@ifnextchar[{\@xendnote}{\stepcounter
@@ -1520,7 +1828,7 @@ bar.pdf為保存的文件名。
 
 \subsubsection{後注序號的樣式}
 
-\begin{lstlisting}[firstnumber=1187]
+\begin{lstlisting}[firstnumber=1501]
 %\def\enoteformat{\parindent -1.3zw \leftskip 2.3zw %
 \def\enoteformat{\parindent -3zw \leftskip 4zw \rightskip 4zw%
 % \UTF{FE35}\hbox{\yoko\expandafter\ajTumesuji\expandafter*\expandafter{\number\@theenmark}}\UTF{FE36}}
@@ -1534,7 +1842,7 @@ bar.pdf為保存的文件名。
 
 \subsection{注文的輸出}
 
-\begin{lstlisting}[firstnumber=1195]
+\begin{lstlisting}[firstnumber=1509]
 \newlength\chuskip
 \setlength\chuskip{1zw}  							 %在正文中設置可覆蓋此句
 
@@ -1565,7 +1873,7 @@ bar.pdf為保存的文件名。
 \subsection{引入頭注}
 
 \par 引入頭注（眉批），并按章標題刷新。
-\begin{lstlisting}[firstnumber=1220]
+\begin{lstlisting}[firstnumber=1534]
 \RequirePackage{tochu}
 \@addtoreset{kcbango}{chapter}
 \end{lstlisting}
@@ -1573,7 +1881,7 @@ bar.pdf為保存的文件名。
 \subsection{雜項}
 
 \par 定義的 fake 破折號（曲綫救國）。
-\begin{lstlisting}[firstnumber=1224]
+\begin{lstlisting}[firstnumber=1538]
 \def\dash{{\leavevmode\kern1mm\raise0.1zh\hbox{\mgfamily{------}}\kern1mm}}
 \end{lstlisting}
 
@@ -1582,7 +1890,7 @@ bar.pdf為保存的文件名。
 \subsection{定義目錄頁碼格式}
 \par 因hyperref包會刷新目錄頁碼格式，導致目錄頁碼格式失效。
 \par 這裏使用 \verb+\AtBeginDocument+ 命令重新定義目錄頁碼格式（非常重要！！）
-\begin{lstlisting}[firstnumber=1227]
+\begin{lstlisting}[firstnumber=1541]
 \AtBeginDocument{%
 %\def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\zhnumber{#3}}}
 \def\contentsline#1#2#3#4{\csname l@#1\endcsname{\hyper@linkstart{link}{#4}{#2}\hyper@linkend}{\@Kanji{#3}}}
