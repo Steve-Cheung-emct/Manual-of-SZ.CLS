@@ -5,24 +5,46 @@
 {\fontsize{10pt}{12}\selectfont\ttfamily
 \begin{tabular}{|c|p{70mm}|p{75mm}|}
  \hline%
-{序 號} & {入 例} & {說 明} \\ \hline %
-0 & \verb+\documentclass[pdfm,b5paper]{sz}+ & 小川原版class改，字號不嚴格對應標準字號。\\
-1 & \verb+\documentclass[pdfm,b5paper]{sz9}+ & 正文 9 pt 系列，按此實際字號換算class字號。\\
-2 & \verb+\documentclass[pdfm,b5paper]{sz10}+ & 正文 10 pt 系列（同上）。\\
-3 & \verb+\documentclass[pdfm,b5paper]{sz11}+ & 正文 11 pt 系列（同上）。\\
-4 & \verb+\documentclass[pdfm,b5paper]{sz12}+ & 正文 12 pt 系列（同上）。\\
-5 & \verb+\documentclass[pdfm,b5paper]{sz10x}+ & 正文 五號（10.5pb 合 10.53937 pt）系列。\\
+\multicolumn{1}{|c|}{序 號} & \multicolumn{1}{|c|}{入 例} & \multicolumn{1}{|c|}{說 明} \\ \hline %
+0 & \verb+\documentclass[pdfm,b5paper,sz]{sz}+ & 小川原版class改，字號不嚴格對應標準字號。\\
+1 & \verb+\documentclass[pdfm,b5paper,szix]{sz}+ & 正文 9 pt 系列，按此實際字號換算class字號。\\
+2 & \verb+\documentclass[pdfm,b5paper,szx]{sz}+ & 正文 10 pt 系列（同上）。\\
+3 & \verb+\documentclass[pdfm,b5paper,szxi]{sz}+ & 正文 11 pt 系列（同上）。\\
+4 & \verb+\documentclass[pdfm,b5paper,szxii]{sz}+ & 正文 12 pt 系列（同上）。\\
+5 & \verb+\documentclass[pdfm,b5paper,xz]{sz}+ & 正文 五號（10.5pb 合 10.53937 pt）系列。\\
+6 & \verb+\documentclass[pdfm,b5paper]{sz}+ & 正文 10 pt 系列（默認）。\\
 \hline%
 \end{tabular} }
 	\end{center}
 \end{table}
 
+\par 紙張的選擇：「A4」「A5」「B4」「B5」，以及「a4paper」「a5paper」「b4paper」「b5paper」他們彼此是完全相同的。
+\par 注意：此「b5paper」為 JIS B5 規格（寬 182mm，高 257mm）。
+\par 還可以選擇「test」選項調用卷子畫幅，注意，使用「test」時需使用 \verb+\pagestyle{empty} + 消除書眉和頁碼，
+以方便pdfcrop工具進行剪裁。
+\par 不推薦使用 「twocolumn」選項，因其容易引起版面混亂。現推薦使用 「multirow」和「multicol」，通過
+調用{\verb+\begin{multicols}{2} xxxx \end{multicols} + } 環境，來使用雙欄。
+
+\par 本模板和 「geometry」宏包不兼容，强行使用會出現版面混亂。在 settings.sty 中調整版面，手動設置
+文本行長（textwidth）。
+
+\par 應使用 \verb+\setlength{\xxx}{5 mm} + 的方式設置長度變量，如采用\verb+\setlength\xxx{5mm} + 的
+方式可能不會成功。例如設置段落縮進，應采用：{\verb+ \setlength{\parindent}{2 zw} + }
+而不推薦大家使用：\\
+{\uwave{\color{red}\verb+ \setlength\parindent{2 zw} + }}
+
+\clearpage
 \section{小川 弘和 SZ.CLS 字號對照表}\label{sec:intro}
+
+\par 字號換算公式：
+\[ \backslash class@size = 1.09529 \backslash real@size \]
+或
+\[ \backslash class@size = \backslash real@size/0.913 \]
 
 \subsection{正文 9 pt 系列}
 \begin{figure}[H]
 \begin{center}
-\caption{小川原版class改（sz.cls）}
+\caption{小川原版class改（「sz」選項）}
 { \includegraphics[scale=1]{figures/sz.pdf}}
 \end{center}
 \par 正文 9 pt 系列，字號不嚴格對應標準字號。
@@ -30,7 +52,7 @@
 
 \begin{figure}[H]
 \begin{center}
-\caption{正文 9 pt 系列（sz9.cls）}
+\caption{正文 9 pt 系列（「szix」選項）}
 { \includegraphics[scale=1]{figures/sz9.pdf}}
 \end{center}
 \par 正文 9 pt 系列，按此實際字號換算class字號。
@@ -39,7 +61,7 @@
 \subsection{正文 10 pt 系列}
 \begin{figure}[H]
 \begin{center}
-\caption{正文 10 pt 系列（sz10.cls）}
+\caption{正文 10 pt 系列（「szx」選項）}
 { \includegraphics[scale=1]{figures/sz10.pdf}}
 \end{center}
 \par 正文 10 pt 系列，按此實際字號換算class字號。
@@ -48,7 +70,7 @@
 \subsection{正文 11 pt 系列}
 \begin{figure}[H]
 \begin{center}
-\caption{正文 11 pt 系列（sz11.cls）}
+\caption{正文 11 pt 系列（「szxi」選項）}
 { \includegraphics[scale=1]{figures/sz11.pdf}}
 \end{center}
 \par 正文 11 pt 系列，按此實際字號換算class字號。
@@ -58,7 +80,7 @@
 \subsection{正文 12 pt 系列}
 \begin{figure}[H]
 \begin{center}
-\caption{正文 12 pt 系列（sz12.cls）}
+\caption{正文 12 pt 系列（「szxii」選項）}
 { \includegraphics[scale=1]{figures/sz12.pdf}}
 \end{center}
 \par 正文 12 pt 系列，按此實際字號換算class字號。
@@ -67,38 +89,15 @@
 \subsection{正文 五號 系列}
 \begin{figure}[H]
 \begin{center}
-\caption{正文 五號 系列（sz10x.cls）}
-{ \includegraphics[scale=1]{figures/sz10x.pdf}}
+\caption{正文 五號 系列（「xz」選項）}
+{ \includegraphics[scale=0.9]{figures/sz10x.pdf}}
 \end{center}
-\par 正文  五號  系列，按此實際字號換算class字號。
+
 \end{figure}
 
-
-
-\section{up{\LaTeX}常用命令舉例}
-
-\begin{itemize}
-\item{}{\verb+\yato+}和{\verb+\tate+}：这两个命令是让你确定横排还是竖排。实际上还有一个{\verb+\dtou+}命令，也是竖排，但是是从下到上，这个命令只有在一些开发文档上才能看到。
-\item{}{\verb+\jfont+}和{\verb+\tfont+}：这两个命令和TeX原始的{\verb+\font+}命令一样，但是分别指定的是横排和竖排的字体。在{p\LaTeX}扩展的NFSS编码中，横排和竖排的字体编码为JY1和JT1，{up\LaTeX}中相应的编码为JY2和JT2，{Lua\TeX}-ja中对应的编码为JY3和JT3。
-\item{}{\verb+\jfam+}：这个命令是用来定义字体族的，请参考{\TeX}中的{\verb+\fam+}用法。
-\item{}{\verb+zh+}和{\verb+zw+}：这两个是相对单位，类似于tfm中定义的ex和em，指的是一个汉字的高度和宽度，定义来源于jfm中的相关部分。
-\item{}{\verb+\ybaselineshift+}和{\verb+\tbaselineshift+}：这两个命令是用来对齐汉字和西文之间的基线的，通常情况下都需要进行调整，让汉字与西文对齐。
-\item{}{\verb+\kanjiskip+}和{\verb+\xkanjiskip+}：两个命令分别对应的是：汉字-汉字之间距离，汉字-西文距离。 有点像{\TeX}中{\verb+\spaceskip+}（此命令只對西文起作用）。
-\item{}{\verb+\kansuji+}和{\verb+\kansujichar+}：前者将阿拉伯数字转换成汉字，如{\verb+\kansuji12+}转换成“一二”。后者给数字指定汉字，如{\verb+\kansujichar1=`壱+}。
-\item{}{\verb+\euc+}、{\verb+\jis+}和{\verb+\sjis+}：这个命令相当于{\verb+\char+}，就是限定了编码。
-\item{}{\verb+\prebreakpenalty+}和{\verb+\postbreakpenalty+}：这两个命令分别在某个字符前或者字符后添加penalty，以达到避头尾的效果。如{\verb+\prebreakpenalty`あ=1000+}。
-\item{}{\verb+\jcharwidowpenalty+}：这是控制孤行的。
-\item{}{\verb+\xspcode+}：控制{\verb+\xkanjiskip+}插入的命令，对象是西文字符，如{\verb+\xspcode`A=0+}。可选的值为：0，1，2，3。0的情况：禁止在左侧插入。1的情况：允许在左侧插入。2的情况：允许在右侧插入。3的情况：允许两侧插入。
-\item{}{\verb+\inhibitglue+}：禁止glue插入。
-\item{}{\verb+\autospacing+}和{\verb+\noautospacing+}：允许/禁止汉字-汉字之间插入glue。
-\item{}{\verb+\autoxspacing+}和{\verb+\noautoxspacing+}：允许/禁止汉字-西文之间插入glue。
-\item{}{\verb+\inhibitxspcode+}：和{\verb+\xspcode+}类似，但是这个命令对象是汉字字符。
-\item{}{\verb+\kcatcode+}：类似于TeX的{\verb+\catcode+}。
-\end{itemize}
-
-\par\href{https://www.zhihu.com/question/20544732/answer/15437234}%
-{詳見``如何使用 LaTeX 輸出豎版排版的文章或書籍？"}
-
+\vspace*{1mm}
+\par 正文五號系列字號對照表詳見ctex.pdf 8.1 節（P.25）。
+\par 正文  五號  系列，按此實際字號換算class字號。
 
 %\clearpage
 
@@ -223,7 +222,7 @@ perl pxcopyfont.pl -o jis-v klee-db-jt1 r-klee-db-jt1
 \end{center}
 \end{figure}
 
-%\clearpage
+\clearpage
 \subsection{簡體中文本地字體}
 
 \par{}參照前文

@@ -110,6 +110,30 @@ C:\Windows\system32>
 \end{center}
 \end{table}
 
+\section{up{\LaTeX}常用命令舉例}
+
+\begin{itemize}
+\item{}{\verb+\yato+}和{\verb+\tate+}：这两个命令是让你确定横排还是竖排。实际上还有一个{\verb+\dtou+}命令，也是竖排，但是是从下到上，这个命令只有在一些开发文档上才能看到。
+\item{}{\verb+\jfont+}和{\verb+\tfont+}：这两个命令和TeX原始的{\verb+\font+}命令一样，但是分别指定的是横排和竖排的字体。在{p\LaTeX}扩展的NFSS编码中，横排和竖排的字体编码为JY1和JT1，{up\LaTeX}中相应的编码为JY2和JT2，{Lua\TeX}-ja中对应的编码为JY3和JT3。
+\item{}{\verb+\jfam+}：这个命令是用来定义字体族的，请参考{\TeX}中的{\verb+\fam+}用法。
+\item{}{\verb+zh+}和{\verb+zw+}：这两个是相对单位，类似于tfm中定义的ex和em，指的是一个汉字的高度和宽度，定义来源于jfm中的相关部分。
+\item{}{\verb+\ybaselineshift+}和{\verb+\tbaselineshift+}：这两个命令是用来对齐汉字和西文之间的基线的，通常情况下都需要进行调整，让汉字与西文对齐。
+\item{}{\verb+\kanjiskip+}和{\verb+\xkanjiskip+}：两个命令分别对应的是：汉字-汉字之间距离，汉字-西文距离。 有点像{\TeX}中{\verb+\spaceskip+}（此命令只對西文起作用）。
+\item{}{\verb+\kansuji+}和{\verb+\kansujichar+}：前者将阿拉伯数字转换成汉字，如{\verb+\kansuji12+}转换成“一二”。后者给数字指定汉字，如{\verb+\kansujichar1=`壱+}。
+\item{}{\verb+\euc+}、{\verb+\jis+}和{\verb+\sjis+}：这个命令相当于{\verb+\char+}，就是限定了编码。
+\item{}{\verb+\prebreakpenalty+}和{\verb+\postbreakpenalty+}：这两个命令分别在某个字符前或者字符后添加penalty，以达到避头尾的效果。如{\verb+\prebreakpenalty`あ=1000+}。
+\item{}{\verb+\jcharwidowpenalty+}：这是控制孤行的。
+\item{}{\verb+\xspcode+}：控制{\verb+\xkanjiskip+}插入的命令，对象是西文字符，如{\verb+\xspcode`A=0+}。可选的值为：0，1，2，3。0的情况：禁止在左侧插入。1的情况：允许在左侧插入。2的情况：允许在右侧插入。3的情况：允许两侧插入。
+\item{}{\verb+\inhibitglue+}：禁止glue插入。
+\item{}{\verb+\autospacing+}和{\verb+\noautospacing+}：允许/禁止汉字-汉字之间插入glue。
+\item{}{\verb+\autoxspacing+}和{\verb+\noautoxspacing+}：允许/禁止汉字-西文之间插入glue。
+\item{}{\verb+\inhibitxspcode+}：和{\verb+\xspcode+}类似，但是这个命令对象是汉字字符。
+\item{}{\verb+\kcatcode+}：类似于TeX的{\verb+\catcode+}。
+\end{itemize}
+
+\par\href{https://www.zhihu.com/question/20544732/answer/15437234}%
+{詳見``如何使用 LaTeX 輸出豎版排版的文章或書籍？"}
+
 \section{ Drag＆Drop Up\TeX 2018介紹}\label{uptex-xiongben}
 
 配置緊湊（具體來說，TeX Live 方案 - 小到只收集日語解決方案），
