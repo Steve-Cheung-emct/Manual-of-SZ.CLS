@@ -72,20 +72,21 @@
 
 
 %% 図表など
-% 図の読みこみのために
-\usepackage[dvipdfmx]{graphicx}
-\DeclareGraphicsExtensions{.eps,.jpg,.png,.pdf}
+
 \usepackage{float}   %使用浮動體
 \usepackage{booktabs} % 表の横罫線
 
 %%%% PDF 作者信息及超鏈接設定
 \usepackage[dvipdfmx,
 %    pdfdirection=R2L, % 開く方向%從右往左翻頁
+    pdfstartview=FitH, % 页面适合高度
     colorlinks=true,   %設置超鏈接的顔色
     linkcolor=black,
     filecolor=black,
     urlcolor=cyan,
     citecolor=black,
+    pdftoolbar=false, % 显示工具栏
+    pdfmenubar=false, % 显示菜单栏
     bookmarks=true, % PDFにしおりをつける
     bookmarksnumbered=true, % しおりに節番号などをつける
     bookmarksopen=true, %展開所有層級
@@ -137,7 +138,6 @@
 \usepackage[uplatex,deluxe]{otf}               % 多書體支持，在SZ.CLS中定義
 \usepackage{plext}% 縦組用
 %\usepackage{lmodern}														% http://ctan.org/pkg/lm
-\usepackage{unicode-math}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{metalogo}  %logo包

@@ -111,7 +111,7 @@ C:\Windows\system32>
 \end{table}
 
 \section{up{\LaTeX}常用命令舉例}
-
+\symkm
 \begin{itemize}
 \item{}{\verb+\yato+}和{\verb+\tate+}：这两个命令是让你确定横排还是竖排。实际上还有一个{\verb+\dtou+}命令，也是竖排，但是是从下到上，这个命令只有在一些开发文档上才能看到。
 \item{}{\verb+\jfont+}和{\verb+\tfont+}：这两个命令和TeX原始的{\verb+\font+}命令一样，但是分别指定的是横排和竖排的字体。在{p\LaTeX}扩展的NFSS编码中，横排和竖排的字体编码为JY1和JT1，{up\LaTeX}中相应的编码为JY2和JT2，{Lua\TeX}-ja中对应的编码为JY3和JT3。
@@ -130,6 +130,8 @@ C:\Windows\system32>
 \item{}{\verb+\inhibitxspcode+}：和{\verb+\xspcode+}类似，但是这个命令对象是汉字字符。
 \item{}{\verb+\kcatcode+}：类似于TeX的{\verb+\catcode+}。
 \end{itemize}
+
+\mcfamily
 
 \par\href{https://www.zhihu.com/question/20544732/answer/15437234}%
 {詳見``如何使用 LaTeX 輸出豎版排版的文章或書籍？"}

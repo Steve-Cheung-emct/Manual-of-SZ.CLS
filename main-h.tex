@@ -1,18 +1,39 @@
+%\RequirePackage{tikz}
+
+
+
 %#!使用uplatex 編譯
 \documentclass[uplatex,a4paper,10pt]{ujarticle}
+
+
+
+% 図の読みこみのために
+\usepackage[dvipdfmx]{graphicx}
+
+\DeclareGraphicsExtensions{.eps,.jpg,.png,.pdf}
+
+\usepackage{tikz}
+
+
 \usepackage{settings}% 字體配置
 \pagestyle{plain}
 \linespread{1.0} %使用割注時請勿修改文本行距，此處爲全局行距
 
 \usepackage{multicol}
 
-
+\makeatletter
+\renewcommand{\LARGE}{\@setfontsize\LARGE{16pt}{26}} 
+\renewcommand{\small}{\@setfontsize\small{8pt}{10}}%
+\makeatother
 
 \begin{document}
 
 %\upstsl
 
-\symkm
+%\symkm
+
+\mcfamily
+
 
 \title{\mcfamily\bfseries{up\LaTeX}{小川弘和}{SZ.CLS}{説明}}
 \author{子　康}
