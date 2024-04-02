@@ -63,8 +63,6 @@ $ kanji-config-updmap-sys --jis2004 kozuka-pr6n
 
 \footnotetext[3]{IPAex字體下載地址：\url{https://ipafont.ipa.go.jp/node26} }
 
-
-
 \par 設置結果如下所示：
 \begin{lstlisting}[firstnumber=1]
 C:\Windows\system32>kanji-config-updmap-sys kozuka-pr6n
@@ -111,7 +109,7 @@ C:\Windows\system32>
 \end{table}
 
 \section{up{\LaTeX}常用命令舉例}
-\symkm
+\symtr
 \begin{itemize}
 \item{}{\verb+\yato+}和{\verb+\tate+}：这两个命令是让你确定横排还是竖排。实际上还有一个{\verb+\dtou+}命令，也是竖排，但是是从下到上，这个命令只有在一些开发文档上才能看到。
 \item{}{\verb+\jfont+}和{\verb+\tfont+}：这两个命令和TeX原始的{\verb+\font+}命令一样，但是分别指定的是横排和竖排的字体。在{p\LaTeX}扩展的NFSS编码中，横排和竖排的字体编码为JY1和JT1，{up\LaTeX}中相应的编码为JY2和JT2，{Lua\TeX}-ja中对应的编码为JY3和JT3。
@@ -144,7 +142,7 @@ C:\Windows\system32>
 通過將 \TeX 環境包裝在應用程序包中，使用拖放功能將其安裝在
 任意位置，並以最少的操作完成必要的設置。
 
-\CID{722}OSX 專用。
+{\mcfamily\mdseries\CID{722} OSX 專用。}
 
 項目網站：\url{http://www2.kumagaku.ac.jp/teacher/herogw/}
 
@@ -247,12 +245,14 @@ Adobe-GB1-4	& GB4 & 2000年11月20日發佈，
 \hline
 Adobe-GB1-5	& GB5 & 主要是彜族文字，來自GB18030-2005字符集，
 計1,220個CID & 30,284（27,625） \\
+\hline
+Adobe-GB1-6	& GB5 & 通用規範漢字（含類推簡化），來自GB18030-2022字符集，
+計288個CID & 30,571（27,913） \\
 
 \hline % 在表格最下方绘制横线
 \end{tabular}
 
 \end{table}
-
 
 \subsection{繁體中文分級}
 {\gtfamily 代表字體：AdobeMingStd-Light.otf ；AdobeFanHeitiStd-Bold.otf；}

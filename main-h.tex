@@ -1,11 +1,7 @@
 %\RequirePackage{tikz}
 
-
-
 %#!使用uplatex 編譯
 \documentclass[uplatex,a4paper,10pt]{ujarticle}
-
-
 
 % 図の読みこみのために
 \usepackage[dvipdfmx]{graphicx}
@@ -13,7 +9,6 @@
 \DeclareGraphicsExtensions{.eps,.jpg,.png,.pdf}
 
 \usepackage{tikz}
-
 
 \usepackage{settings}% 字體配置
 \pagestyle{plain}
@@ -25,6 +20,8 @@
 \renewcommand{\LARGE}{\@setfontsize\LARGE{16pt}{26}} 
 \renewcommand{\small}{\@setfontsize\small{8pt}{10}}%
 \makeatother
+\renewcommand{\arraystretch}{1.0} % default is 1.0
+\setlength\tabcolsep{3pt} %% 这个就是重点！！
 
 \begin{document}
 
@@ -33,7 +30,6 @@
 %\symkm
 
 \mcfamily
-
 
 \title{\mcfamily\bfseries{up\LaTeX}{小川弘和}{SZ.CLS}{説明}}
 \author{子　康}
@@ -45,12 +41,10 @@ ver.1.1a
 \end{center}
 \vskip20mm
 
-
-
 \section{緣起}
 \par 本模板曾經被我用於《石頭記》垂直排版之用。現如今，將代碼托管到 GitHub ，
 以供愛好者們克隆使用。
-\par 本模板使用{up\LaTeX}或者{Up\TeX}進行編譯。
+\par 本模板使用{up\LaTeX}編譯。
 
 \input{part2}
 
@@ -58,14 +52,10 @@ ver.1.1a
 
 \input{part4}
 
-
 \input{appendix}
 
 % 輸入封底
 \input{endpage-h}
 
-
 \end{document}
-
-
 
